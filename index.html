@@ -406,6 +406,7 @@ function spellHTML(){
     ${!fb?`<button class="act pri" onclick="check()">Check ✓</button>`:""}
     ${fb==="good"&&cur<activeWeek.words.length-1?`<button class="act suc" onclick="next()">Next word →</button>`:""}
     ${fb==="good"&&cur===activeWeek.words.length-1?`<button class="act suc" onclick="goToTest()">Take the test! 📝</button>`:""}
+    ${cur===activeWeek.words.length-1?`<button class="act" onclick="goToTest()" style="border-color:#534AB7;color:#534AB7;">Go to test →</button>`:""}
     ${fb==="bad"?`<button class="act" onclick="retry()">Try again</button>`:""}
     ${fb==="bad"&&tries>=2?`<button class="act" onclick="setMode('learn')">Go back to Learn it</button>`:""}
   </div>
@@ -420,7 +421,20 @@ function goToTest(){
   testAnswers=activeWeek.words.map(()=>"");
   testSubmitted=false;
   mode="test";
-  renderMain();
+  // render directly into root so it's never blocked by renderSpelling wrapper
+  const el=document.getElementById("main");
+  if(el){el.innerHTML=testHTML();}
+  else{
+    // fallback: re-render full spelling screen then inject
+    document.getElementById("root").innerHTML=`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;">
+      <button class="act" style="font-size:12px;padding:6px 12px;" onclick="goHome()">← Home</button>
+      <span style="font-size:12px;color:#888;font-weight:600;">Week ${activeWeek.week} — Test</span>
+      <span></span>
+    </div>
+    <div id="main"></div>`;
+    document.getElementById("main").innerHTML=testHTML();
+  }
 }
 
 function testHTML(){
