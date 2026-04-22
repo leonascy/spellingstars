@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:system-ui,sans-serif;background:#faf9f7;color:#1a1a1a;min-height:100vh;}
+.app{max-width:620px;margin:0 auto;padding:1.2rem 1rem 3rem;}
+h1{font-size:22px;font-weight:700;text-align:center;color:#2d2060;margin-bottom:3px;}
+.sub{text-align:center;font-size:13px;color:#999;margin-bottom:1.2rem;}
+.trophy-screen{background:#fff;border-radius:16px;border:1px solid #ebe9f8;padding:1.4rem;margin-bottom:1rem;}
+.trophy-screen h2{font-size:16px;font-weight:700;color:#2d2060;margin-bottom:4px;}
+.tsub{font-size:12px;color:#aaa;margin-bottom:1.2rem;}
+.weeks-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.2rem;}
+.week-card{background:#f7f6ff;border-radius:12px;border:1px solid #e5e3f5;padding:10px 6px;text-align:center;cursor:default;transition:all .15s;}
+.week-card.has-words{cursor:pointer;}
+.week-card.has-words:hover{border-color:#c5c1f0;}
+.week-card.perfect{background:#fffbf0;border-color:#f5d060;}
+.week-card.active{border:2px solid #7F77DD;background:#eeedfe;}
+.wk-label{font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;}
+.wk-stars{font-size:16px;line-height:1;margin-bottom:4px;min-height:20px;}
+.wk-score{font-size:11px;color:#888;}
+.start-btn{width:100%;padding:11px;border-radius:10px;border:none;background:#534AB7;color:#fff;font-size:14px;font-weight:700;cursor:pointer;}
+.start-btn:hover{background:#3C3489;}
+.pips{display:flex;gap:4px;justify-content:center;margin-bottom:1.2rem;}
+.pip{height:7px;flex:1;max-width:50px;border-radius:4px;background:#e5e3f5;}
+.pip.done{background:#5DCAA5;}.pip.cur{background:#7F77DD;}
+.card{background:#fff;border-radius:16px;border:1px solid #ebe9f8;padding:1.4rem;margin-bottom:.8rem;}
+.wnum{font-size:11px;color:#bbb;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em;}
+.tabs{display:flex;gap:6px;margin-bottom:1.1rem;}
+.tab{flex:1;padding:7px 0;border-radius:8px;font-size:13px;font-weight:600;border:1px solid #e0ddf5;cursor:pointer;background:#fff;color:#aaa;text-align:center;transition:all .15s;}
+.tab.on{background:#eeedfe;color:#534AB7;border-color:#c5c1f0;}
+.sent-row{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#f7f6ff;border-radius:10px;margin-bottom:1rem;}
+.sent-text{font-size:15px;line-height:1.7;color:#222;flex:1;}
+.sent-text .tw{font-weight:800;text-decoration:underline;color:#2d2060;text-underline-offset:3px;}
+.sent-text .blank{display:inline-block;min-width:60px;border-bottom:2px solid #7F77DD;vertical-align:bottom;margin:0 2px;}
+.spk{background:none;border:none;cursor:pointer;padding:4px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#7F77DD;flex-shrink:0;transition:background .15s;}
+.spk:hover{background:#eeedfe;}
+.spk svg{width:20px;height:20px;}
+.mean{font-size:13px;color:#555;padding:8px 12px;border-left:3px solid #5DCAA5;border-radius:0 8px 8px 0;background:#f0faf6;margin-bottom:1.1rem;}
+.mean b{color:#1a1a1a;}
+.plabel{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#bbb;margin-bottom:8px;}
+.ph-row{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:1.1rem;}
+.ph{padding:8px 13px;border-radius:10px;font-size:17px;font-weight:700;display:flex;flex-direction:column;align-items:center;min-width:46px;}
+.ph .ipa{font-size:10px;font-weight:400;margin-top:3px;opacity:.65;font-family:monospace;}
+.ph .ptype{font-size:9px;margin-top:1px;opacity:.5;text-transform:uppercase;letter-spacing:.04em;}
+.ph.v{background:#eeedfe;color:#3C3489;}
+.ph.c{background:#e1f5ee;color:#085041;}
+.ph.b{background:#faece7;color:#712B13;}
+.ph.d{background:#faeeda;color:#633806;}
+.ph.s{background:#f1efe8;color:#aaa;}
+.tip{font-size:13px;color:#666;padding:9px 12px;background:#fafaf5;border-radius:8px;margin-bottom:1.1rem;line-height:1.5;}
+.leg{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:1.1rem;}
+.li{display:flex;align-items:center;gap:4px;font-size:11px;color:#aaa;}
+.ld{width:9px;height:9px;border-radius:2px;}
+.spell-action-btn{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;border:1px solid #e0ddf5;background:#fff;cursor:pointer;width:100%;text-align:left;transition:background .15s;margin-bottom:1.1rem;}
+.spell-action-btn:hover{background:#f0eeff;}
+.spk-circle{width:34px;height:34px;border-radius:50%;background:#eeedfe;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.spk-circle svg{width:18px;height:18px;color:#534AB7;}
+.btn-label{font-size:13px;font-weight:600;color:#333;}
+.btn-sub{font-size:12px;color:#aaa;margin-top:1px;}
+.spell-input{font-size:22px;padding:10px 14px;width:100%;border-radius:10px;border:1.5px solid #ddd;background:#fff;color:#222;margin-bottom:12px;outline:none;transition:border-color .2s;direction:ltr;text-align:left;unicode-bidi:normal;}
+.spell-input:focus{border-color:#7F77DD;}
+.spell-input.correct{border-color:#1D9E75;background:#f0faf6;}
+.spell-input.wrong{border-color:#D85A30;background:#fff5f3;}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;}
+button.act{font-size:13px;padding:9px 18px;border-radius:9px;border:1px solid #ddd;background:#fff;color:#333;cursor:pointer;font-weight:500;}
+button.act:hover{background:#f5f5f5;}
+button.pri{background:#534AB7;color:#fff;border-color:#534AB7;}
+button.pri:hover{background:#3C3489;}
+button.suc{background:#1D9E75;color:#fff;border-color:#1D9E75;}
+button.warn{background:#D85A30;color:#fff;border-color:#D85A30;}
+.fb{margin-top:12px;padding:11px 14px;border-radius:10px;font-size:14px;line-height:1.5;}
+.fb.good{background:#e1f5ee;color:#085041;}
+.fb.bad{background:#faece7;color:#712B13;}
+.sc{text-align:center;padding:1.5rem 1rem;}
+.sc-stars{font-size:26px;letter-spacing:1px;margin-bottom:.6rem;}
+.sc-num{font-size:48px;font-weight:700;color:#534AB7;line-height:1;}
+.sc h2{font-size:20px;font-weight:700;margin:.6rem 0 .3rem;}
+.sc p{color:#777;margin-bottom:.6rem;font-size:14px;}
+.choc-box{background:#fffbf0;border:2px solid #f5c842;border-radius:12px;padding:1rem;margin:1rem 0;font-size:15px;color:#7a5c00;font-weight:600;}
+.choc-box .choc-icon{font-size:42px;margin-bottom:.4rem;}
+.sc-btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:1rem;}
+@keyframes pop{0%{transform:scale(0.6);opacity:0;}70%{transform:scale(1.12);}100%{transform:scale(1);opacity:1;}}
+.pop{animation:pop .35s ease forwards;}
+</style>
+</head>
+<body>
+<div class="app">
+  <h1>Spelling Stars ⭐</h1>
+  <p class="sub">Learn, listen and spell your way to the top!</p>
+  <div id="root"></div>
+</div>
+<script>
+const ALL_WEEKS=[
+ {week:4,words:[
+  {word:"zebra",target:"zebra",sentence:"The zebra is an animal that looks like a horse and has black and white stripes.",meaning:"An African animal with black and white stripes.",
+   phonemes:[{p:"z",t:"c",ipa:"/z/"},{p:"e",t:"v",ipa:"/ɛ/ eh"},{p:"br",t:"b",ipa:"/br/"},{p:"a",t:"v",ipa:"/ə/ uh"}],
+   hint:"'z' buzzes like a bee. 'br' is a blend. The 'a' at the end sounds like a soft uh."},
+  {word:"again",target:"again",sentence:"The old man is in the hospital again because he has not recovered from his injury.",meaning:"One more time.",
+   phonemes:[{p:"a",t:"v",ipa:"/ə/ uh"},{p:"g",t:"c",ipa:"/g/"},{p:"ai",t:"d",ipa:"/ɛ/ eh"},{p:"n",t:"c",ipa:"/n/"}],
+   hint:"'a' at the start sounds like uh. 'ai' here sounds like short e — a tricky word to remember!"},
+  {word:"leaves",target:"leaves",sentence:"The fallen leaves have dried up.",meaning:"The flat green parts that grow on trees and plants.",
+   phonemes:[{p:"l",t:"c",ipa:"/l/"},{p:"ea",t:"d",ipa:"/iː/ ee"},{p:"v",t:"c",ipa:"/v/"},{p:"es",t:"d",ipa:"/z/ plural"}],
+   hint:"'ea' makes a long ee sound here — like in eat and sea. 'es' makes it plural."},
+  {word:"lizard",target:"lizard",sentence:"I found a lizard behind the painting on the wall.",meaning:"A small reptile with four legs and a long tail.",
+   phonemes:[{p:"l",t:"c",ipa:"/l/"},{p:"i",t:"v",ipa:"/ɪ/ ih"},{p:"z",t:"c",ipa:"/z/"},{p:"ar",t:"d",ipa:"/ɑː/ ar"},{p:"d",t:"c",ipa:"/d/"}],
+   hint:"'z' buzzes. 'ar' makes the ar sound — like in car and star."},
+  {word:"baboon",target:"baboon",sentence:"The baboon swung from tree to tree.",meaning:"A large monkey with a long snout, found in Africa.",
+   phonemes:[{p:"b",t:"c",ipa:"/b/"},{p:"a",t:"v",ipa:"/æ/ a"},{p:"b",t:"c",ipa:"/b/"},{p:"oo",t:"d",ipa:"/uː/ oo"},{p:"n",t:"c",ipa:"/n/"}],
+   hint:"'oo' makes a long ooo sound — like in moon. Say: b·a·b·oo·n"},
+  {word:"teatime",target:"teatime",sentence:"We always drink red bean soup at teatime.",meaning:"The time in the afternoon when tea and snacks are usually eaten.",
+   phonemes:[{p:"t",t:"c",ipa:"/t/"},{p:"ea",t:"d",ipa:"/iː/ ee"},{p:"t",t:"c",ipa:"/t/"},{p:"i",t:"v",ipa:"/aɪ/ eye"},{p:"m",t:"c",ipa:"/m/"},{p:"e",t:"s",ipa:"silent"}],
+   hint:"'ea' says ee. 'i' in time says eye. The 'e' at the end is silent. Two words joined: tea + time."},
+  {word:"hippopotamus",target:"hippopotamus",sentence:"The hippopotamus cooled itself down in the river.",meaning:"A very large, heavy animal that lives near rivers in Africa.",
+   phonemes:[{p:"h",t:"c",ipa:"/h/"},{p:"i",t:"v",ipa:"/ɪ/ ih"},{p:"pp",t:"c",ipa:"/p/"},{p:"o",t:"v",ipa:"/ɒ/ o"},{p:"p",t:"c",ipa:"/p/"},{p:"o",t:"v",ipa:"/ɒ/ o"},{p:"t",t:"c",ipa:"/t/"},{p:"a",t:"v",ipa:"/æ/ a"},{p:"m",t:"c",ipa:"/m/"},{p:"us",t:"d",ipa:"/əs/"}],
+   hint:"A long word — break it into parts: hip · po · pot · a · mus. Say it slowly!"},
+  {word:"branches",target:"branches",sentence:"The branches of a tree are smaller than its trunk.",meaning:"The parts that grow out from the trunk of a tree.",
+   phonemes:[{p:"br",t:"b",ipa:"/br/"},{p:"a",t:"v",ipa:"/æ/ a"},{p:"n",t:"c",ipa:"/n/"},{p:"ch",t:"d",ipa:"/tʃ/ ch"},{p:"es",t:"d",ipa:"/ɪz/ plural"}],
+   hint:"'br' is a blend. 'ch' sounds like ch in chip. 'es' makes it plural."},
+  {word:"popped out",target:"popped out",sentence:"When I opened the mystery box, a toy clown popped out of it.",meaning:"Came out suddenly and quickly.",
+   phonemes:[{p:"p",t:"c",ipa:"/p/"},{p:"o",t:"v",ipa:"/ɒ/ o"},{p:"pp",t:"c",ipa:"/p/"},{p:"ed",t:"d",ipa:"/t/ past"},{p:"ou",t:"d",ipa:"/aʊ/ ow"},{p:"t",t:"c",ipa:"/t/"}],
+   hint:"Double 'pp' gives a short vowel before it. 'ou' in out sounds like ow. 'ed' sounds like t here."},
+  {word:"smaller animals",target:"smaller animals",sentence:"Some animals in the wild eat other smaller animals.",meaning:"Animals that are not as big as others.",
+   phonemes:[{p:"sm",t:"b",ipa:"/sm/"},{p:"a",t:"v",ipa:"/æ/ a"},{p:"ll",t:"c",ipa:"/l/"},{p:"er",t:"d",ipa:"/ər/ er"},{p:"a",t:"v",ipa:"/æ/ a"},{p:"n",t:"c",ipa:"/n/"},{p:"i",t:"v",ipa:"/ɪ/ ih"},{p:"m",t:"c",ipa:"/m/"},{p:"al",t:"d",ipa:"/əl/ ul"},{p:"s",t:"c",ipa:"/z/ plural"}],
+   hint:"'sm' is a blend. Double 'll' sounds like one l. 'er' at the end sounds like ur."},
+ ]},
+ {week:5,words:[
+  {word:"cut",target:"cut",sentence:"The butchers cut the meat into smaller pieces.",meaning:"To divide something with a sharp tool, like a knife.",
+   phonemes:[{p:"c",t:"c",ipa:"/k/"},{p:"u",t:"v",ipa:"/ʌ/ uh"},{p:"t",t:"c",ipa:"/t/"}],
+   hint:"Short 'u' sounds like 'uh' — as in cup and sun. Blend: k · uh · t"},
+  {word:"zoomed out",target:"zoomed out",sentence:"The students zoomed out of their classroom when the bell rang.",meaning:"Moved very quickly out of a place.",
+   phonemes:[{p:"z",t:"c",ipa:"/z/"},{p:"oo",t:"d",ipa:"/uː/ oo"},{p:"m",t:"c",ipa:"/m/"},{p:"ed",t:"d",ipa:"/d/ past"},{p:"ou",t:"d",ipa:"/aʊ/ ow"},{p:"t",t:"c",ipa:"/t/"}],
+   hint:"'oo' makes a long ooo sound. 'ou' in out sounds like ow. Two words together."},
+  {word:"sandwich",target:"sandwich",sentence:"Mary is buying a tuna sandwich for her brother.",meaning:"Two slices of bread with a filling in between.",
+   phonemes:[{p:"s",t:"c",ipa:"/s/"},{p:"a",t:"v",ipa:"/æ/ a"},{p:"nd",t:"b",ipa:"/nd/"},{p:"w",t:"c",ipa:"/w/"},{p:"i",t:"v",ipa:"/ɪ/ ih"},{p:"ch",t:"d",ipa:"/tʃ/ ch"}],
+   hint:"'ch' makes a ch sound like chip. 'nd' blends n and d together."},
+  {word:"yelled",target:"yelled",sentence:"Sally yelled in pain during her injection.",meaning:"Shouted very loudly, often because of pain or excitement.",
+   phonemes:[{p:"y",t:"c",ipa:"/j/ y"},{p:"e",t:"v",ipa:"/ɛ/ eh"},{p:"ll",t:"c",ipa:"/l/"},{p:"ed",t:"d",ipa:"/d/ past"}],
+   hint:"'y' sounds like j as in yes. Double ll is just one l sound."},
+  {word:"some",target:"Some",sentence:"Some pupils have forgotten to do their homework.",meaning:"A number of people or things — not all of them.",
+   phonemes:[{p:"s",t:"c",ipa:"/s/"},{p:"o",t:"v",ipa:"/ʌ/ uh"},{p:"m",t:"c",ipa:"/m/"},{p:"e",t:"s",ipa:"silent"}],
+   hint:"Tricky word! The 'o' sounds like 'uh' and the 'e' at the end is completely silent."},
+  {word:"giant",target:"giant",sentence:"My sister screamed when she found a giant cockroach in the kitchen.",meaning:"Extremely large — much bigger than normal.",
+   phonemes:[{p:"g",t:"c",ipa:"/dʒ/ j"},{p:"i",t:"v",ipa:"/aɪ/ eye"},{p:"a",t:"v",ipa:"/æ/ a"},{p:"n",t:"c",ipa:"/n/"},{p:"t",t:"c",ipa:"/t/"}],
+   hint:"'g' before 'i' makes a soft j sound — like giraffe."},
+  {word:"bread",target:"bread",sentence:"I eat bread with jam every morning.",meaning:"A baked food made from flour, often eaten with butter or jam.",
+   phonemes:[{p:"br",t:"b",ipa:"/br/"},{p:"ea",t:"d",ipa:"/ɛ/ eh"},{p:"d",t:"c",ipa:"/d/"}],
+   hint:"'ea' sounds like short e here — like in head and dead."},
+  {word:"sting",target:"sting",sentence:"The scorpion's sting is poisonous.",meaning:"A sharp painful poke from an insect, or the pointed part that causes it.",
+   phonemes:[{p:"st",t:"b",ipa:"/st/"},{p:"i",t:"v",ipa:"/ɪ/ ih"},{p:"ng",t:"d",ipa:"/ŋ/ ng"}],
+   hint:"'st' blends s and t. 'ng' makes the ng sound — like ring and sing."},
+  {word:"tasty",target:"tasty",sentence:"I am looking forward to eating my grandmother's tasty cooked food.",meaning:"Food that has a very nice, delicious flavour.",
+   phonemes:[{p:"t",t:"c",ipa:"/t/"},{p:"a",t:"v",ipa:"/æ/ a"},{p:"st",t:"b",ipa:"/st/"},{p:"y",t:"c",ipa:"/iː/ ee"}],
+   hint:"'st' blends s and t. 'y' at the end sounds like a long ee — as in happy."},
+  {word:"soup",target:"soup",sentence:'The giant bellowed at the villagers, "Make me some soup now!"',meaning:"A hot liquid food made by cooking ingredients in water.",
+   phonemes:[{p:"s",t:"c",ipa:"/s/"},{p:"ou",t:"d",ipa:"/uː/ oo"},{p:"p",t:"c",ipa:"/p/"}],
+   hint:"'ou' in soup sounds like the long oo in moon — learn it as a whole pattern!"},
+ ]},
+ {week:7,words:[
+  {word:"butter",target:"butter",sentence:"I love to eat bread with peanut butter.",meaning:"A soft yellow food made from cream, spread on bread.",
+   phonemes:[{p:"b",t:"c",ipa:"/b/"},{p:"u",t:"v",ipa:"/ʌ/ uh"},{p:"tt",t:"c",ipa:"/t/"},{p:"er",t:"d",ipa:"/ər/ er"}],
+   hint:"Double 'tt' gives a short vowel before it. 'er' at the end sounds like ur — like in butter and ladder."},
+  {word:"cover",target:"cover",sentence:"The chefs had to cover all the leftover food with plastic wrappers.",meaning:"To put something over the top of something else to hide or protect it.",
+   phonemes:[{p:"c",t:"c",ipa:"/k/"},{p:"o",t:"v",ipa:"/ʌ/ uh"},{p:"v",t:"c",ipa:"/v/"},{p:"er",t:"d",ipa:"/ər/ er"}],
+   hint:"'o' here sounds like uh — as in come and love. 'er' sounds like ur."},
+  {word:"cucumbers",target:"cucumbers",sentence:"My mother is buying cucumbers from the supermarket.",meaning:"Long green vegetables with a cool, watery inside.",
+   phonemes:[{p:"c",t:"c",ipa:"/k/"},{p:"u",t:"v",ipa:"/juː/ yoo"},{p:"c",t:"c",ipa:"/k/"},{p:"um",t:"v",ipa:"/ʌm/"},{p:"b",t:"c",ipa:"/b/"},{p:"er",t:"d",ipa:"/ər/ er"},{p:"s",t:"c",ipa:"/z/ plural"}],
+   hint:"Say it in parts: cu · cum · bers. The first 'u' sounds like yoo."},
+  {word:"tomatoes",target:"tomatoes",sentence:"The baby has cheeks as red as tomatoes.",meaning:"Round red fruits often used in cooking.",
+   phonemes:[{p:"t",t:"c",ipa:"/t/"},{p:"o",t:"v",ipa:"/ə/ uh"},{p:"m",t:"c",ipa:"/m/"},{p:"a",t:"v",ipa:"/eɪ/ ay"},{p:"t",t:"c",ipa:"/t/"},{p:"oes",t:"d",ipa:"/əʊz/ oz"}],
+   hint:"'a' in the middle says ay — like in late. Say it in parts: to · ma · toes."},
+  {word:"slices",target:"slices",sentence:"Karen cuts the fish fillet into two slices with a sharp knife.",meaning:"Thin flat pieces cut from something larger.",
+   phonemes:[{p:"sl",t:"b",ipa:"/sl/"},{p:"i",t:"v",ipa:"/aɪ/ eye"},{p:"c",t:"c",ipa:"/s/"},{p:"es",t:"d",ipa:"/ɪz/ plural"}],
+   hint:"'sl' is a blend. 'i' says eye — like in slide. 'c' before 'e' makes an s sound."},
+  {word:"place",target:"place",sentence:"The teacher told the students to place their books on the table.",meaning:"To put something somewhere carefully.",
+   phonemes:[{p:"pl",t:"b",ipa:"/pl/"},{p:"a",t:"v",ipa:"/eɪ/ ay"},{p:"c",t:"c",ipa:"/s/"},{p:"e",t:"s",ipa:"silent"}],
+   hint:"'pl' is a blend. 'a' says ay — the magic e at the end makes the vowel say its name."},
+  {word:"cheese",target:"Cheese",sentence:"Cheese comes from milk and is rich in protein.",meaning:"A food made from milk that can be hard or soft.",
+   phonemes:[{p:"ch",t:"d",ipa:"/tʃ/ ch"},{p:"ee",t:"d",ipa:"/iː/ ee"},{p:"s",t:"c",ipa:"/z/"},{p:"e",t:"s",ipa:"silent"}],
+   hint:"'ch' sounds like in chip. 'ee' is a long ee sound. The final 'e' is silent."},
+  {word:"pieces",target:"pieces",sentence:"Mrs Lim has collected a few of our art pieces which she will display in the classroom later.",meaning:"Separate parts or items of something.",
+   phonemes:[{p:"p",t:"c",ipa:"/p/"},{p:"ie",t:"d",ipa:"/iː/ ee"},{p:"c",t:"c",ipa:"/s/"},{p:"es",t:"d",ipa:"/ɪz/ plural"}],
+   hint:"'ie' says ee — like in field. 'c' before 'e' makes an s sound."},
+  {word:"lettuce",target:"lettuce",sentence:"I enjoy eating green leafy vegetables like lettuce.",meaning:"A leafy green vegetable often used in salads.",
+   phonemes:[{p:"l",t:"c",ipa:"/l/"},{p:"e",t:"v",ipa:"/ɛ/ eh"},{p:"tt",t:"c",ipa:"/t/"},{p:"uce",t:"d",ipa:"/ɪs/ is"}],
+   hint:"Double 'tt' gives a short vowel. The 'uce' ending sounds like iss — a tricky one!"},
+  {word:"spread",target:"spread",sentence:"We cover our mouths when we sneeze so that germs will not spread.",meaning:"To move or cause something to move over a wider area.",
+   phonemes:[{p:"spr",t:"b",ipa:"/spr/"},{p:"ea",t:"d",ipa:"/ɛ/ eh"},{p:"d",t:"c",ipa:"/d/"}],
+   hint:"'spr' is a three-letter blend. 'ea' sounds like short e here — like in bread and head."},
+ ]},
+ {week:8,words:[
+  {word:"honey",target:"honey",sentence:"My mother is adding a teaspoon of honey to her tea to sweeten it.",meaning:"A sweet, sticky liquid made by bees.",
+   phonemes:[{p:"h",t:"c",ipa:"/h/"},{p:"o",t:"v",ipa:"/ʌ/ uh"},{p:"n",t:"c",ipa:"/n/"},{p:"ey",t:"d",ipa:"/iː/ ee"}],
+   hint:"'o' sounds like uh — as in money. 'ey' at the end sounds like ee."},
+  {word:"hungry",target:"hungry",sentence:"Donna's stomach is growling as she is hungry.",meaning:"Feeling the need to eat food.",
+   phonemes:[{p:"h",t:"c",ipa:"/h/"},{p:"u",t:"v",ipa:"/ʌ/ uh"},{p:"ng",t:"d",ipa:"/ŋ/ ng"},{p:"gr",t:"b",ipa:"/gr/"},{p:"y",t:"c",ipa:"/iː/ ee"}],
+   hint:"'ng' makes the ng sound. 'gr' is a blend. 'y' at the end sounds like ee."},
+  {word:"licks",target:"licks",sentence:"The cat licks its paws when it wants to clean itself.",meaning:"Passes the tongue over something.",
+   phonemes:[{p:"l",t:"c",ipa:"/l/"},{p:"i",t:"v",ipa:"/ɪ/ ih"},{p:"ck",t:"d",ipa:"/k/"},{p:"s",t:"c",ipa:"/s/"}],
+   hint:"'ck' makes a k sound — used after a short vowel. Say: l·ih·k·s"},
+  {word:"buzz",target:"buzz",sentence:"The buzz of my father's handphone woke him up.",meaning:"A low humming sound, like the sound a bee makes.",
+   phonemes:[{p:"b",t:"c",ipa:"/b/"},{p:"u",t:"v",ipa:"/ʌ/ uh"},{p:"zz",t:"c",ipa:"/z/"}],
+   hint:"Double 'zz' makes one z sound. Short 'u' says uh. Say: b·uh·z"},
+  {word:"tunnel",target:"tunnel",sentence:"My brother got scared when the train went through the dark tunnel.",meaning:"A long underground passage.",
+   phonemes:[{p:"t",t:"c",ipa:"/t/"},{p:"u",t:"v",ipa:"/ʌ/ uh"},{p:"nn",t:"c",ipa:"/n/"},{p:"el",t:"d",ipa:"/əl/ ul"}],
+   hint:"Double 'nn' is just one n sound. 'el' at the end sounds like ul — like in channel."},
+  {word:"beehive",target:"beehive",sentence:"I can see the bees going in and out of their beehive.",meaning:"The home where bees live together.",
+   phonemes:[{p:"b",t:"c",ipa:"/b/"},{p:"ee",t:"d",ipa:"/iː/ ee"},{p:"h",t:"c",ipa:"/h/"},{p:"i",t:"v",ipa:"/aɪ/ eye"},{p:"v",t:"c",ipa:"/v/"},{p:"e",t:"s",ipa:"silent"}],
+   hint:"Two words joined: bee + hive. 'ee' says ee. 'i' in hive says eye — magic e rule!"},
+  {word:"fluttering",target:"fluttering",sentence:"The moth that is trapped inside the lamp is fluttering around.",meaning:"Moving wings rapidly — to flap quickly.",
+   phonemes:[{p:"fl",t:"b",ipa:"/fl/"},{p:"u",t:"v",ipa:"/ʌ/ uh"},{p:"tt",t:"c",ipa:"/t/"},{p:"er",t:"d",ipa:"/ər/ er"},{p:"ing",t:"d",ipa:"/ɪŋ/ ing"}],
+   hint:"'fl' is a blend. Double 'tt' gives a short vowel. 'ing' is a suffix added to flutter."},
+  {word:"drinking nectar",target:"drinking nectar",sentence:"The bees are drinking nectar from the flowers in my garden.",meaning:"Drinking the sweet liquid found inside flowers.",
+   phonemes:[{p:"dr",t:"b",ipa:"/dr/"},{p:"i",t:"v",ipa:"/ɪ/ ih"},{p:"nk",t:"d",ipa:"/ŋk/"},{p:"ing",t:"d",ipa:"/ɪŋ/"},{p:"n",t:"c",ipa:"/n/"},{p:"ec",t:"v",ipa:"/ɛk/"},{p:"t",t:"c",ipa:"/t/"},{p:"ar",t:"d",ipa:"/ər/ er"}],
+   hint:"'dr' is a blend. 'nk' makes a nk sound. Nectar: neck · tar. Two words together."},
+  {word:"queen bee",target:"queen bee",sentence:"The queen bee does not need to look for food.",meaning:"The most important female bee in a hive — the mother of all the other bees.",
+   phonemes:[{p:"qu",t:"d",ipa:"/kw/"},{p:"ee",t:"d",ipa:"/iː/ ee"},{p:"n",t:"c",ipa:"/n/"},{p:"b",t:"c",ipa:"/b/"},{p:"ee",t:"d",ipa:"/iː/ ee"}],
+   hint:"'qu' always sounds like kw. Both 'ee' sounds are long ee. Two words together."},
+  {word:"eating pollen",target:"eating pollen",sentence:"The bird is eating pollen from the orchid.",meaning:"Consuming the fine yellow powder from flowers.",
+   phonemes:[{p:"ea",t:"d",ipa:"/iː/ ee"},{p:"t",t:"c",ipa:"/t/"},{p:"ing",t:"d",ipa:"/ɪŋ/"},{p:"p",t:"c",ipa:"/p/"},{p:"o",t:"v",ipa:"/ɒ/ o"},{p:"ll",t:"c",ipa:"/l/"},{p:"en",t:"d",ipa:"/ən/ un"}],
+   hint:"'ea' in eating says ee. Pollen: pol · len. Double 'll' is one l sound. Two words together."},
+ ]},
+ {week:9,words:[
+  {word:"on the ground",target:"on the ground",sentence:"My brother dropped his wallet on the ground.",meaning:"On the surface of the earth beneath our feet.",
+   phonemes:[{p:"o",t:"v",ipa:"/ɒ/ o"},{p:"n",t:"c",ipa:"/n/"},{p:"th",t:"d",ipa:"/ð/ th"},{p:"gr",t:"b",ipa:"/gr/"},{p:"ou",t:"d",ipa:"/aʊ/ ow"},{p:"nd",t:"b",ipa:"/nd/"}],
+   hint:"'th' makes the th sound. 'gr' is a blend. 'ou' in ground sounds like ow. Three words together."},
+  {word:"nest",target:"nest",sentence:"A pigeon is living in the nest on top of this tree.",meaning:"A home built by birds, usually made of twigs and grass.",
+   phonemes:[{p:"n",t:"c",ipa:"/n/"},{p:"e",t:"v",ipa:"/ɛ/ eh"},{p:"st",t:"b",ipa:"/st/"}],
+   hint:"'st' is a blend at the end. Short 'e' says eh. Say: n·eh·st"},
+  {word:"queen ant",target:"queen ant",sentence:"The queen ant is the mother of all the ants in the colony.",meaning:"The most important female ant in a colony — she lays all the eggs.",
+   phonemes:[{p:"qu",t:"d",ipa:"/kw/"},{p:"ee",t:"d",ipa:"/iː/ ee"},{p:"n",t:"c",ipa:"/n/"},{p:"a",t:"v",ipa:"/æ/ a"},{p:"n",t:"c",ipa:"/n/"},{p:"t",t:"c",ipa:"/t/"}],
+   hint:"'qu' sounds like kw. 'ee' is long ee. Short 'a' in ant says a. Two words together."},
+  {word:"laying eggs",target:"laying eggs",sentence:"The ducks in my barn are laying eggs.",meaning:"Producing eggs from the body.",
+   phonemes:[{p:"l",t:"c",ipa:"/l/"},{p:"ay",t:"d",ipa:"/eɪ/ ay"},{p:"ing",t:"d",ipa:"/ɪŋ/"},{p:"e",t:"v",ipa:"/ɛ/ eh"},{p:"gg",t:"c",ipa:"/g/"},{p:"s",t:"c",ipa:"/z/ plural"}],
+   hint:"'ay' makes the ay sound. 'gg' is just one g sound. 'ing' is added to lay. Two words together."},
+  {word:"marching",target:"marching",sentence:"The soldiers are marching on the field.",meaning:"Walking with regular steps in a group, like soldiers.",
+   phonemes:[{p:"m",t:"c",ipa:"/m/"},{p:"ar",t:"d",ipa:"/ɑː/ ar"},{p:"ch",t:"d",ipa:"/tʃ/ ch"},{p:"ing",t:"d",ipa:"/ɪŋ/"}],
+   hint:"'ar' sounds like ar in car. 'ch' sounds like in chip. 'ing' is a suffix."},
+  {word:"scurrying",target:"scurrying",sentence:"Everyone is scurrying for shelter as it is raining.",meaning:"Moving quickly with short fast steps — like a mouse.",
+   phonemes:[{p:"sc",t:"b",ipa:"/sk/"},{p:"ur",t:"d",ipa:"/ɜː/ ur"},{p:"r",t:"c",ipa:"/r/"},{p:"y",t:"v",ipa:"/iː/ ee"},{p:"ing",t:"d",ipa:"/ɪŋ/"}],
+   hint:"'sc' sounds like sk. 'ur' says ur — like in hurt. 'y' before 'ing' changes to 'ying'."},
+  {word:"crawling",target:"crawling",sentence:"My brother screamed when he saw a bug crawling on the floor.",meaning:"Moving slowly on hands and knees, or close to the ground.",
+   phonemes:[{p:"cr",t:"b",ipa:"/kr/"},{p:"aw",t:"d",ipa:"/ɔː/ aw"},{p:"l",t:"c",ipa:"/l/"},{p:"ing",t:"d",ipa:"/ɪŋ/"}],
+   hint:"'cr' is a blend. 'aw' makes the aw sound — like in claw and draw."},
+  {word:"sleeping",target:"sleeping",sentence:"Alfred was scolded for sleeping in class.",meaning:"Being in a state of rest with your eyes closed.",
+   phonemes:[{p:"sl",t:"b",ipa:"/sl/"},{p:"ee",t:"d",ipa:"/iː/ ee"},{p:"p",t:"c",ipa:"/p/"},{p:"ing",t:"d",ipa:"/ɪŋ/"}],
+   hint:"'sl' is a blend. 'ee' makes a long ee sound. 'ing' is added to sleep."},
+  {word:"nibble",target:"nibble",sentence:"When my friends are not too hungry during snack time, they nibble on biscuits.",meaning:"To eat something by taking small bites.",
+   phonemes:[{p:"n",t:"c",ipa:"/n/"},{p:"i",t:"v",ipa:"/ɪ/ ih"},{p:"bb",t:"c",ipa:"/b/"},{p:"le",t:"d",ipa:"/əl/ ul"}],
+   hint:"Double 'bb' gives a short vowel. 'le' at the end sounds like ul — like in bubble and paddle."},
+  {word:"suck",target:"suck",sentence:"The babies in the nursery had to suck the milk from their milk bottles.",meaning:"To draw liquid into the mouth using the lips and tongue.",
+   phonemes:[{p:"s",t:"c",ipa:"/s/"},{p:"u",t:"v",ipa:"/ʌ/ uh"},{p:"ck",t:"d",ipa:"/k/"}],
+   hint:"'ck' makes a k sound — used after a short vowel. Short 'u' says uh. Say: s·uh·k"},
+ ]},
+ {week:10,words:[
+  {word:"chair",target:"chair",sentence:"Everyone sat on the chair in the school hall.",meaning:"A piece of furniture with four legs and a back, used for sitting.",
+   phonemes:[{p:"ch",t:"d",ipa:"/tʃ/ ch"},{p:"ai",t:"d",ipa:"/ɛə/ air"},{p:"r",t:"c",ipa:"/r/"}],
+   hint:"'ch' sounds like in chip. 'air' makes the air sound — like in fair and hair."},
+  {word:"in",target:"in",sentence:"We live in Singapore.",meaning:"Inside or within a place.",
+   phonemes:[{p:"i",t:"v",ipa:"/ɪ/ ih"},{p:"n",t:"c",ipa:"/n/"}],
+   hint:"A short simple word — short i says ih. Say: ih·n"},
+  {word:"pets",target:"Pets",sentence:"Pets are animals that you keep at home.",meaning:"Animals kept at home as companions.",
+   phonemes:[{p:"p",t:"c",ipa:"/p/"},{p:"e",t:"v",ipa:"/ɛ/ eh"},{p:"t",t:"c",ipa:"/t/"},{p:"s",t:"c",ipa:"/s/"}],
+   hint:"Short 'e' says eh. 's' makes it plural. Say: p·eh·t·s"},
+  {word:"dish",target:"dish",sentence:"Fried rice is my favourite dish.",meaning:"A type of food prepared in a particular way.",
+   phonemes:[{p:"d",t:"c",ipa:"/d/"},{p:"i",t:"v",ipa:"/ɪ/ ih"},{p:"sh",t:"d",ipa:"/ʃ/ sh"}],
+   hint:"'sh' makes the sh sound — like in ship and fish. Say: d·ih·sh"},
+  {word:"tricks",target:"tricks",sentence:"The clown performed many tricks.",meaning:"Clever actions done to entertain or surprise people.",
+   phonemes:[{p:"tr",t:"b",ipa:"/tr/"},{p:"i",t:"v",ipa:"/ɪ/ ih"},{p:"ck",t:"d",ipa:"/k/"},{p:"s",t:"c",ipa:"/s/"}],
+   hint:"'tr' is a blend. 'ck' makes a k sound after a short vowel. 's' makes it plural."},
+  {word:"have",target:"have",sentence:"They wanted to have chicken rice for dinner.",meaning:"To own or possess something.",
+   phonemes:[{p:"h",t:"c",ipa:"/h/"},{p:"a",t:"v",ipa:"/æ/ a"},{p:"v",t:"c",ipa:"/v/"},{p:"e",t:"s",ipa:"silent"}],
+   hint:"Short 'a' says a. The 'e' at the end is silent — it doesn't follow the magic e rule here!"},
+  {word:"through",target:"through",sentence:"The cat crawled through the tunnel.",meaning:"Moving in one side and out the other side.",
+   phonemes:[{p:"thr",t:"b",ipa:"/θr/"},{p:"ough",t:"d",ipa:"/uː/ oo"}],
+   hint:"'thr' is a three-letter blend. 'ough' here sounds like oo — a tricky spelling pattern!"},
+  {word:"but",target:"but",sentence:"We wanted to go for a picnic but it rained.",meaning:"Used to introduce something different or opposite.",
+   phonemes:[{p:"b",t:"c",ipa:"/b/"},{p:"u",t:"v",ipa:"/ʌ/ uh"},{p:"t",t:"c",ipa:"/t/"}],
+   hint:"Short 'u' says uh — as in cut and hut. Say: b·uh·t"},
+  {word:"what",target:"What",sentence:'"What would you like to order?" the waiter asked.',meaning:"Used to ask about something unknown.",
+   phonemes:[{p:"wh",t:"d",ipa:"/w/ wh"},{p:"a",t:"v",ipa:"/ɒ/ o"},{p:"t",t:"c",ipa:"/t/"}],
+   hint:"'wh' sounds like w. 'a' in what sounds like o — a tricky word! Say: w·o·t"},
+  {word:"were",target:"were",sentence:"There were many people in the park.",meaning:"The past tense of 'are' — used to describe what was happening before.",
+   phonemes:[{p:"w",t:"c",ipa:"/w/"},{p:"ere",t:"d",ipa:"/ɜː/ ur"}],
+   hint:"'ere' sounds like ur — like in her and stir. A tricky sight word to learn by heart!"},
+ ]},
+
+];
+
+const TCLS={v:"v",c:"c",b:"b",d:"d",s:"s"};
+const TNAME={v:"Vowel",c:"Consonant",b:"Blend",d:"Digraph",s:"Silent"};
+
+function loadState(){try{return JSON.parse(localStorage.getItem("spellingStarsV3")||"{}");}catch(e){return{};}}
+function saveState(){try{localStorage.setItem("spellingStarsV3",JSON.stringify(appState));}catch(e){}}
+let appState=loadState();
+if(!appState.weekScores)appState.weekScores={};
+
+let activeWeek=null,cur=0,scores=[],mode="learn",inp="",fb="",tries=0;
+
+let voice=null;
+function initVoice(){
+  const vs=speechSynthesis.getVoices();
+  if(!vs.length)return;
+  voice=vs.find(v=>v.name==="Samantha")
+      ||vs.find(v=>v.name.includes("Samantha"))
+      ||vs.find(v=>v.lang==="en-US"&&!/male/i.test(v.name))
+      ||vs.find(v=>v.lang.startsWith("en"));
+}
+speechSynthesis.onvoiceschanged=initVoice;
+setTimeout(initVoice,400);
+
+function speak(text,rate){
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  if(voice){u.voice=voice;u.lang=voice.lang;}else u.lang="en-US";
+  u.rate=rate||0.78;u.pitch=1.45;
+  speechSynthesis.speak(u);
+}
+
+function spkSVG(s=20){
+  return`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>`;
+}
+
+function starRow(n,total){
+  let s="";
+  for(let i=0;i<total;i++)s+=i<n?`<span style="color:#f5c842">★</span>`:`<span style="color:#ddd">★</span>`;
+  return s;
+}
+
+function highlightSentence(sentence,target){
+  const esc=target.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+  return sentence.replace(new RegExp(esc,"i"),m=>`<span class="tw">${m}</span>`);
+}
+
+function blankSentence(sentence,target){
+  const esc=target.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+  return sentence.replace(new RegExp(esc,"i"),
+    `<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`);
+}
+
+/* ── HOME ── */
+function renderHome(){
+  const cards=ALL_WEEKS.map(wk=>{
+    const sc=appState.weekScores[wk.week];
+    const hasWords=wk.words.length>0;
+    const isPerfect=sc&&sc.stars===wk.words.length;
+    const isActive=hasWords&&!isPerfect;
+    let starsHtml="",scoreHtml="";
+    if(sc){
+      starsHtml=`<div style="font-size:10px;letter-spacing:0;">${starRow(sc.stars,sc.total)}</div>`;
+      scoreHtml=`${sc.stars}/${sc.total}`;
+    } else if(!hasWords){
+      starsHtml=`<span style="font-size:10px;color:#ccc">Soon</span>`;
+    } else {
+      starsHtml=`<span style="font-size:10px;color:#ccc">Not started</span>`;
+    }
+    return`<div class="week-card${hasWords?" has-words":""}${isPerfect?" perfect":""}${isActive?" active":""}"
+      onclick="${hasWords?`startWeek(${wk.week})`:""}">
+      <div class="wk-label">Week ${wk.week}</div>
+      <div class="wk-stars">${starsHtml}</div>
+      <div class="wk-score">${scoreHtml}</div>
+    </div>`;
+  }).join("");
+
+  const nextWeek=ALL_WEEKS.find(w=>w.words.length>0&&(!appState.weekScores[w.week]||appState.weekScores[w.week].stars<w.words.length));
+  const btnWeek=nextWeek?nextWeek.week:ALL_WEEKS.find(w=>w.words.length>0).week;
+  const btnLabel=nextWeek?(appState.weekScores[nextWeek.week]?"Try Week "+nextWeek.week+" again →":"Start Week "+nextWeek.week+" →"):"Practice again!";
+
+  document.getElementById("root").innerHTML=`
+  <div class="trophy-screen">
+    <h2>My Spelling Stars</h2>
+    <p class="tsub">Get all 10 stars in a week to earn your chocolate! 🍫</p>
+    <div class="weeks-grid">${cards}</div>
+    <button class="start-btn" onclick="startWeek(${btnWeek})">${btnLabel}</button>
+  </div>`;
+}
+
+function startWeek(wkNum){
+  const wk=ALL_WEEKS.find(w=>w.week===wkNum);
+  if(!wk||!wk.words.length)return;
+  activeWeek=wk;cur=0;scores=[];mode="learn";inp="";fb="";tries=0;
+  renderSpelling();
+}
+
+function renderSpelling(){
+  document.getElementById("root").innerHTML=`
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;">
+    <button class="act" style="font-size:12px;padding:6px 12px;" onclick="goHome()">← Home</button>
+    <span style="font-size:12px;color:#888;font-weight:600;">Week ${activeWeek.week}</span>
+    <span id="hdr-stars" style="font-size:13px;">${starRow(0,activeWeek.words.length)}</span>
+  </div>
+  <div class="pips" id="pips"></div>
+  <div id="main"></div>`;
+  renderPips();renderMain();
+}
+
+function renderPips(){
+  const el=document.getElementById("pips");
+  if(!el)return;
+  el.innerHTML=activeWeek.words.map((_,i)=>{
+    let c="pip";
+    if(scores[i]!==undefined)c+=" done";
+    else if(i===cur)c+=" cur";
+    return`<div class="${c}"></div>`;
+  }).join("");
+}
+
+function updateHeaderStars(){
+  const el=document.getElementById("hdr-stars");
+  if(el)el.innerHTML=starRow(scores.filter(Boolean).length,activeWeek.words.length);
+}
+
+function renderMain(){
+  const el=document.getElementById("main");
+  if(!el)return;
+  if(mode==="score"){el.innerHTML=scoreHTML();return;}
+  el.innerHTML=mode==="learn"?learnHTML():spellHTML();
+  if(mode==="spell"&&!fb){
+    const si=document.getElementById("si");
+    if(si){si.focus();si.setSelectionRange(si.value.length,si.value.length);}
+  }
+}
+
+function learnHTML(){
+  const w=activeWeek.words[cur];
+  const phHTML=w.phonemes.map(ph=>`
+    <div class="ph ${TCLS[ph.t]}">
+      ${ph.p}<span class="ipa">${ph.ipa}</span><span class="ptype">${TNAME[ph.t]}</span>
+    </div>`).join("");
+  return`<div class="card">
+  <div class="wnum">Word ${cur+1} of ${activeWeek.words.length}</div>
+  <div class="tabs">
+    <div class="tab on">Learn it</div>
+    <div class="tab" onclick="setMode('spell')">Spell it</div>
+  </div>
+  <div class="sent-row">
+    <button class="spk" onclick="speak(activeWeek.words[cur].sentence,0.78)">${spkSVG(20)}</button>
+    <div class="sent-text">${highlightSentence(w.sentence,w.target)}</div>
+  </div>
+  <div class="mean"><b>Meaning:</b> ${w.meaning}</div>
+  <div class="plabel">Jolly Phonics breakdown</div>
+  <div class="ph-row">${phHTML}</div>
+  <div class="tip">💡 ${w.hint}</div>
+  <div class="leg">
+    <div class="li"><div class="ld" style="background:#AFA9EC"></div>Vowel</div>
+    <div class="li"><div class="ld" style="background:#5DCAA5"></div>Consonant</div>
+    <div class="li"><div class="ld" style="background:#F0997B"></div>Blend</div>
+    <div class="li"><div class="ld" style="background:#FAC775"></div>Digraph</div>
+    <div class="li"><div class="ld" style="background:#ccc"></div>Silent</div>
+  </div>
+  <div class="btn-row">
+    <button class="act pri" onclick="setMode('spell')">Spell it →</button>
+    ${cur<activeWeek.words.length-1?`<button class="act" onclick="nextWord()">Next word →</button>`:""}
+    ${cur>0?`<button class="act" onclick="goBack()">← Back</button>`:""}
+  </div>
+  </div>`;
+}
+
+function spellHTML(){
+  const w=activeWeek.words[cur];
+  const wordEsc=w.word.replace(/\\/g,"\\\\").replace(/'/g,"\\'");
+  const sentEsc=w.sentence.replace(/\\/g,"\\\\").replace(/'/g,"\\'").replace(/"/g,"&quot;");
+  let inputCls="spell-input";
+  if(fb==="good")inputCls+=" correct";
+  if(fb==="bad")inputCls+=" wrong";
+  return`<div class="card">
+  <div class="wnum">Word ${cur+1} of ${activeWeek.words.length}</div>
+  <div class="tabs">
+    <div class="tab" onclick="setMode('learn')">Learn it</div>
+    <div class="tab on">Spell it</div>
+  </div>
+  <div class="sent-row" style="margin-bottom:1.1rem;">
+    <button class="spk" onclick="speak('${sentEsc}',0.78)">${spkSVG(20)}</button>
+    <div class="sent-text">${blankSentence(w.sentence,w.target)}</div>
+  </div>
+  <button class="spell-action-btn" onclick="speak('${wordEsc}',0.62)">
+    <div class="spk-circle">${spkSVG(18)}</div>
+    <div>
+      <div class="btn-label">Spell it now</div>
+      <div class="btn-sub">Tap to hear the word, then type it below</div>
+    </div>
+  </button>
+  <input class="${inputCls}" id="si" type="text"
+    placeholder="Type the word here…"
+    autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+    value="${inp.replace(/"/g,"&quot;")}"
+    oninput="handleInp(this.value)"
+    onkeydown="handleKey(event)"
+    ${fb?"disabled":""}
+    dir="ltr"
+  />
+  <div class="btn-row">
+    ${!fb?`<button class="act pri" onclick="check()">Check ✓</button>`:""}
+    ${fb==="good"&&cur<activeWeek.words.length-1?`<button class="act suc" onclick="next()">Next word →</button>`:""}
+    ${fb==="good"&&cur===activeWeek.words.length-1?`<button class="act suc" onclick="finishWeek()">See my stars! ⭐</button>`:""}
+    ${fb==="bad"?`<button class="act" onclick="retry()">Try again</button>`:""}
+    ${fb==="bad"&&tries>=2?`<button class="act" onclick="setMode('learn')">Go back to Learn it</button>`:""}
+  </div>
+  ${fb==="good"?`<div class="fb good pop">⭐ Brilliant! <b>${w.word}</b> is correct!</div>`:""}
+  ${fb==="bad"?`<div class="fb bad">Not quite — tap the speaker to hear the word again, then try!</div>`:""}
+  </div>`;
+}
+
+function finishWeek(){
+  const correct=scores.filter(Boolean).length;
+  const total=activeWeek.words.length;
+  appState.weekScores[activeWeek.week]={stars:correct,total};
+  saveState();
+  mode="score";renderMain();
+}
+
+function scoreHTML(){
+  const sc=appState.weekScores[activeWeek.week];
+  const stars=sc?sc.stars:scores.filter(Boolean).length;
+  const total=activeWeek.words.length;
+  const perfect=stars===total;
+  return`<div class="card sc">
+  <div class="sc-stars pop">${starRow(stars,total)}</div>
+  <div class="sc-num">${stars} / ${total}</div>
+  <h2>${perfect?"Perfect score! Amazing work!":"Keep going — you can get all 10!"}</h2>
+  <p>${perfect?"You got every single word right this week!":"You got "+stars+" out of "+total+" correct. Try again to collect all your stars!"}</p>
+  ${perfect?`<div class="choc-box"><div class="choc-icon">🍫</div>You earned your chocolate this week!<br><span style="font-size:13px;font-weight:400;color:#9a7020;">Go claim your reward — you deserve it!</span></div>`:""}
+  <div class="sc-btns">
+    <button class="act${perfect?"":" warn"}" onclick="restartWeek()">${perfect?"Practice again ↺":"Try again →"}</button>
+    <button class="act pri" onclick="goHome()">Back to all weeks</button>
+  </div>
+  </div>`;
+}
+
+function setMode(m){speechSynthesis.cancel();mode=m;inp="";fb="";renderMain();}
+function handleInp(v){inp=v;}
+function handleKey(e){if(e.key==="Enter")check();}
+function check(){
+  const w=activeWeek.words[cur];
+  if(inp.trim().toLowerCase()===w.word.toLowerCase()){
+    fb="good";scores[cur]=true;
+    updateHeaderStars();
+    setTimeout(()=>speak(w.word,0.72),250);
+  }else{
+    fb="bad";tries++;
+    if(scores[cur]===undefined)scores[cur]=false;
+  }
+  renderMain();
+}
+function retry(){fb="";inp="";renderMain();}
+function next(){cur++;mode="learn";inp="";fb="";tries=0;renderPips();renderMain();}
+function nextWord(){cur++;mode="learn";inp="";fb="";tries=0;renderPips();renderMain();}
+function goBack(){if(cur>0){cur--;mode="learn";inp="";fb="";tries=0;renderPips();renderMain();}}
+function restartWeek(){cur=0;scores=[];mode="learn";inp="";fb="";tries=0;renderSpelling();}
+function goHome(){speechSynthesis.cancel();renderHome();}
+
+renderHome();
+</script>
+</body>
+</html>
