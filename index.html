@@ -60,7 +60,7 @@ h1{font-size:22px;font-weight:700;text-align:center;color:#2d2060;margin-bottom:
 .spk-circle svg{width:18px;height:18px;color:#534AB7;}
 .btn-label{font-size:13px;font-weight:600;color:#333;}
 .btn-sub{font-size:12px;color:#aaa;margin-top:1px;}
-.spell-input{font-size:22px;padding:10px 14px;width:100%;border-radius:10px;border:1.5px solid #ddd;background:#fff;color:#222;margin-bottom:12px;outline:none;transition:border-color .2s;direction:ltr;text-align:left;unicode-bidi:normal;}
+.spell-input{font-size:22px;padding:10px 14px;width:100%;border-radius:10px;border:1.5px solid #ddd;background:#fff;color:#222;margin-bottom:12px;outline:none;transition:border-color .2s;direction:ltr;text-align:left;}
 .spell-input:focus{border-color:#7F77DD;}
 .spell-input.correct{border-color:#1D9E75;background:#f0faf6;}
 .spell-input.wrong{border-color:#D85A30;background:#fff5f3;}
@@ -74,35 +74,29 @@ button.warn{background:#D85A30;color:#fff;border-color:#D85A30;}
 .fb{margin-top:12px;padding:11px 14px;border-radius:10px;font-size:14px;line-height:1.5;}
 .fb.good{background:#e1f5ee;color:#085041;}
 .fb.bad{background:#faece7;color:#712B13;}
-
-/* ── TEST PAGE ── */
 .test-card{background:#fff;border-radius:16px;border:1px solid #ebe9f8;padding:1.4rem;margin-bottom:1rem;}
-.test-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
-.test-header h2{font-size:16px;font-weight:700;color:#2d2060;}
-.test-header p{font-size:12px;color:#aaa;}
-.test-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f0eeff;}
+.test-title{font-size:16px;font-weight:700;color:#2d2060;margin-bottom:4px;}
+.test-sub{font-size:12px;color:#aaa;margin-bottom:1.2rem;}
+.test-row{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid #f0eeff;}
 .test-row:last-of-type{border-bottom:none;}
-.test-num{font-size:13px;font-weight:700;color:#aaa;min-width:22px;}
-.test-spk{background:none;border:none;cursor:pointer;padding:4px 6px;border-radius:6px;color:#7F77DD;display:flex;align-items:center;flex-shrink:0;transition:background .15s;}
+.test-num{font-size:13px;font-weight:700;color:#bbb;min-width:20px;}
+.test-spk{background:none;border:none;cursor:pointer;padding:4px 6px;border-radius:6px;color:#7F77DD;display:flex;align-items:center;flex-shrink:0;}
 .test-spk:hover{background:#eeedfe;}
 .test-spk.playing{color:#534AB7;background:#eeedfe;}
 .test-spk svg{width:20px;height:20px;}
-.test-input{font-size:16px;padding:7px 11px;flex:1;border-radius:8px;border:1.5px solid #ddd;background:#fff;color:#222;outline:none;transition:border-color .2s;direction:ltr;text-align:left;}
+.test-input{font-size:16px;padding:7px 11px;flex:1;border-radius:8px;border:1.5px solid #ddd;background:#fff;color:#222;outline:none;direction:ltr;text-align:left;transition:border-color .2s;}
 .test-input:focus{border-color:#7F77DD;}
-.test-input.t-correct{border-color:#1D9E75;background:#f0faf6;color:#085041;}
-.test-input.t-wrong{border-color:#D85A30;background:#fff5f3;color:#993C1D;}
-.test-input:disabled{opacity:1;}
-.test-answer{font-size:12px;color:#D85A30;font-weight:600;min-width:80px;text-align:right;}
+.test-input.t-ok{border-color:#1D9E75;background:#f0faf6;color:#085041;}
+.test-input.t-bad{border-color:#D85A30;background:#fff5f3;color:#993C1D;}
+.test-correct-ans{font-size:11px;color:#D85A30;font-weight:700;min-width:90px;text-align:right;}
 .test-actions{display:flex;gap:8px;margin-top:1.2rem;flex-wrap:wrap;}
-
-/* ── SCORE / END ── */
 .sc{text-align:center;padding:1.5rem 1rem;}
 .sc-stars{font-size:26px;letter-spacing:1px;margin-bottom:.6rem;}
 .sc-num{font-size:48px;font-weight:700;color:#534AB7;line-height:1;}
 .sc h2{font-size:20px;font-weight:700;margin:.6rem 0 .3rem;}
 .sc p{color:#777;margin-bottom:.6rem;font-size:14px;}
 .choc-box{background:#fffbf0;border:2px solid #f5c842;border-radius:12px;padding:1rem;margin:1rem 0;font-size:15px;color:#7a5c00;font-weight:600;}
-.choc-box .choc-icon{font-size:42px;margin-bottom:.4rem;}
+.choc-icon{font-size:42px;margin-bottom:.4rem;}
 .sc-btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:1rem;}
 @keyframes pop{0%{transform:scale(0.6);opacity:0;}70%{transform:scale(1.12);}100%{transform:scale(1);opacity:1;}}
 .pop{animation:pop .35s ease forwards;}
@@ -115,65 +109,65 @@ button.warn{background:#D85A30;color:#fff;border-color:#D85A30;}
   <div id="root"></div>
 </div>
 <script>
-const ALL_WEEKS=[
+const WEEKS=[
  {week:4,words:[
   {word:"zebra",target:"zebra",sentence:"The zebra is an animal that looks like a horse and has black and white stripes.",meaning:"An African animal with black and white stripes.",phonemes:[{p:"z",t:"c",ipa:"/z/"},{p:"e",t:"v",ipa:"/ɛ/ eh"},{p:"br",t:"b",ipa:"/br/"},{p:"a",t:"v",ipa:"/ə/ uh"}],hint:"'z' buzzes like a bee. 'br' is a blend. The 'a' at the end sounds like a soft uh."},
-  {word:"again",target:"again",sentence:"The old man is in the hospital again because he has not recovered from his injury.",meaning:"One more time.",phonemes:[{p:"a",t:"v",ipa:"/ə/ uh"},{p:"g",t:"c",ipa:"/g/"},{p:"ai",t:"d",ipa:"/ɛ/ eh"},{p:"n",t:"c",ipa:"/n/"}],hint:"'a' at the start sounds like uh. 'ai' here sounds like short e — a tricky word to remember!"},
-  {word:"leaves",target:"leaves",sentence:"The fallen leaves have dried up.",meaning:"The flat green parts that grow on trees and plants.",phonemes:[{p:"l",t:"c",ipa:"/l/"},{p:"ea",t:"d",ipa:"/iː/ ee"},{p:"v",t:"c",ipa:"/v/"},{p:"es",t:"d",ipa:"/z/ plural"}],hint:"'ea' makes a long ee sound here — like in eat and sea."},
+  {word:"again",target:"again",sentence:"The old man is in the hospital again because he has not recovered from his injury.",meaning:"One more time.",phonemes:[{p:"a",t:"v",ipa:"/ə/ uh"},{p:"g",t:"c",ipa:"/g/"},{p:"ai",t:"d",ipa:"/ɛ/ eh"},{p:"n",t:"c",ipa:"/n/"}],hint:"'a' at the start sounds like uh. 'ai' here sounds like short e."},
+  {word:"leaves",target:"leaves",sentence:"The fallen leaves have dried up.",meaning:"The flat green parts that grow on trees and plants.",phonemes:[{p:"l",t:"c",ipa:"/l/"},{p:"ea",t:"d",ipa:"/iː/ ee"},{p:"v",t:"c",ipa:"/v/"},{p:"es",t:"d",ipa:"/z/"}],hint:"'ea' makes a long ee sound here — like in eat and sea."},
   {word:"lizard",target:"lizard",sentence:"I found a lizard behind the painting on the wall.",meaning:"A small reptile with four legs and a long tail.",phonemes:[{p:"l",t:"c",ipa:"/l/"},{p:"i",t:"v",ipa:"/ɪ/ ih"},{p:"z",t:"c",ipa:"/z/"},{p:"ar",t:"d",ipa:"/ɑː/ ar"},{p:"d",t:"c",ipa:"/d/"}],hint:"'z' buzzes. 'ar' makes the ar sound — like in car and star."},
   {word:"baboon",target:"baboon",sentence:"The baboon swung from tree to tree.",meaning:"A large monkey with a long snout, found in Africa.",phonemes:[{p:"b",t:"c",ipa:"/b/"},{p:"a",t:"v",ipa:"/æ/ a"},{p:"b",t:"c",ipa:"/b/"},{p:"oo",t:"d",ipa:"/uː/ oo"},{p:"n",t:"c",ipa:"/n/"}],hint:"'oo' makes a long ooo sound — like in moon."},
-  {word:"teatime",target:"teatime",sentence:"We always drink red bean soup at teatime.",meaning:"The time in the afternoon when tea and snacks are usually eaten.",phonemes:[{p:"t",t:"c",ipa:"/t/"},{p:"ea",t:"d",ipa:"/iː/ ee"},{p:"t",t:"c",ipa:"/t/"},{p:"i",t:"v",ipa:"/aɪ/ eye"},{p:"m",t:"c",ipa:"/m/"},{p:"e",t:"s",ipa:"silent"}],hint:"'ea' says ee. 'i' in time says eye. The 'e' at the end is silent. Two words joined: tea + time."},
+  {word:"teatime",target:"teatime",sentence:"We always drink red bean soup at teatime.",meaning:"The time in the afternoon when tea and snacks are usually eaten.",phonemes:[{p:"t",t:"c",ipa:"/t/"},{p:"ea",t:"d",ipa:"/iː/ ee"},{p:"t",t:"c",ipa:"/t/"},{p:"i",t:"v",ipa:"/aɪ/ eye"},{p:"m",t:"c",ipa:"/m/"},{p:"e",t:"s",ipa:"silent"}],hint:"'ea' says ee. 'i' in time says eye. The 'e' at the end is silent."},
   {word:"hippopotamus",target:"hippopotamus",sentence:"The hippopotamus cooled itself down in the river.",meaning:"A very large, heavy animal that lives near rivers in Africa.",phonemes:[{p:"h",t:"c",ipa:"/h/"},{p:"i",t:"v",ipa:"/ɪ/ ih"},{p:"pp",t:"c",ipa:"/p/"},{p:"o",t:"v",ipa:"/ɒ/ o"},{p:"p",t:"c",ipa:"/p/"},{p:"o",t:"v",ipa:"/ɒ/ o"},{p:"t",t:"c",ipa:"/t/"},{p:"a",t:"v",ipa:"/æ/ a"},{p:"m",t:"c",ipa:"/m/"},{p:"us",t:"d",ipa:"/əs/"}],hint:"A long word — break it into parts: hip · po · pot · a · mus."},
-  {word:"branches",target:"branches",sentence:"The branches of a tree are smaller than its trunk.",meaning:"The parts that grow out from the trunk of a tree.",phonemes:[{p:"br",t:"b",ipa:"/br/"},{p:"a",t:"v",ipa:"/æ/ a"},{p:"n",t:"c",ipa:"/n/"},{p:"ch",t:"d",ipa:"/tʃ/ ch"},{p:"es",t:"d",ipa:"/ɪz/ plural"}],hint:"'br' is a blend. 'ch' sounds like ch in chip."},
-  {word:"popped out",target:"popped out",sentence:"When I opened the mystery box, a toy clown popped out of it.",meaning:"Came out suddenly and quickly.",phonemes:[{p:"p",t:"c",ipa:"/p/"},{p:"o",t:"v",ipa:"/ɒ/ o"},{p:"pp",t:"c",ipa:"/p/"},{p:"ed",t:"d",ipa:"/t/ past"},{p:"ou",t:"d",ipa:"/aʊ/ ow"},{p:"t",t:"c",ipa:"/t/"}],hint:"Double 'pp' gives a short vowel. 'ou' in out sounds like ow. Two words together."},
-  {word:"smaller animals",target:"smaller animals",sentence:"Some animals in the wild eat other smaller animals.",meaning:"Animals that are not as big as others.",phonemes:[{p:"sm",t:"b",ipa:"/sm/"},{p:"a",t:"v",ipa:"/æ/ a"},{p:"ll",t:"c",ipa:"/l/"},{p:"er",t:"d",ipa:"/ər/ er"},{p:"a",t:"v",ipa:"/æ/ a"},{p:"n",t:"c",ipa:"/n/"},{p:"i",t:"v",ipa:"/ɪ/ ih"},{p:"m",t:"c",ipa:"/m/"},{p:"al",t:"d",ipa:"/əl/ ul"},{p:"s",t:"c",ipa:"/z/ plural"}],hint:"'sm' is a blend. Double 'll' sounds like one l. Two words together."},
+  {word:"branches",target:"branches",sentence:"The branches of a tree are smaller than its trunk.",meaning:"The parts that grow out from the trunk of a tree.",phonemes:[{p:"br",t:"b",ipa:"/br/"},{p:"a",t:"v",ipa:"/æ/ a"},{p:"n",t:"c",ipa:"/n/"},{p:"ch",t:"d",ipa:"/tʃ/ ch"},{p:"es",t:"d",ipa:"/ɪz/"}],hint:"'br' is a blend. 'ch' sounds like ch in chip."},
+  {word:"popped out",target:"popped out",sentence:"When I opened the mystery box, a toy clown popped out of it.",meaning:"Came out suddenly and quickly.",phonemes:[{p:"p",t:"c",ipa:"/p/"},{p:"o",t:"v",ipa:"/ɒ/ o"},{p:"pp",t:"c",ipa:"/p/"},{p:"ed",t:"d",ipa:"/t/"},{p:"ou",t:"d",ipa:"/aʊ/ ow"},{p:"t",t:"c",ipa:"/t/"}],hint:"Double 'pp' gives a short vowel. 'ou' in out sounds like ow."},
+  {word:"smaller animals",target:"smaller animals",sentence:"Some animals in the wild eat other smaller animals.",meaning:"Animals that are not as big as others.",phonemes:[{p:"sm",t:"b",ipa:"/sm/"},{p:"a",t:"v",ipa:"/æ/ a"},{p:"ll",t:"c",ipa:"/l/"},{p:"er",t:"d",ipa:"/ər/"},{p:"a",t:"v",ipa:"/æ/ a"},{p:"n",t:"c",ipa:"/n/"},{p:"i",t:"v",ipa:"/ɪ/ ih"},{p:"m",t:"c",ipa:"/m/"},{p:"al",t:"d",ipa:"/əl/"},{p:"s",t:"c",ipa:"/z/"}],hint:"'sm' is a blend. Double 'll' sounds like one l. Two words together."},
  ]},
  {week:5,words:[
   {word:"cut",target:"cut",sentence:"The butchers cut the meat into smaller pieces.",meaning:"To divide something with a sharp tool, like a knife.",phonemes:[{p:"c",t:"c",ipa:"/k/"},{p:"u",t:"v",ipa:"/ʌ/ uh"},{p:"t",t:"c",ipa:"/t/"}],hint:"Short 'u' sounds like 'uh' — as in cup and sun."},
-  {word:"zoomed out",target:"zoomed out",sentence:"The students zoomed out of their classroom when the bell rang.",meaning:"Moved very quickly out of a place.",phonemes:[{p:"z",t:"c",ipa:"/z/"},{p:"oo",t:"d",ipa:"/uː/ oo"},{p:"m",t:"c",ipa:"/m/"},{p:"ed",t:"d",ipa:"/d/ past"},{p:"ou",t:"d",ipa:"/aʊ/ ow"},{p:"t",t:"c",ipa:"/t/"}],hint:"'oo' makes a long ooo sound. 'ou' in out sounds like ow."},
+  {word:"zoomed out",target:"zoomed out",sentence:"The students zoomed out of their classroom when the bell rang.",meaning:"Moved very quickly out of a place.",phonemes:[{p:"z",t:"c",ipa:"/z/"},{p:"oo",t:"d",ipa:"/uː/ oo"},{p:"m",t:"c",ipa:"/m/"},{p:"ed",t:"d",ipa:"/d/"},{p:"ou",t:"d",ipa:"/aʊ/ ow"},{p:"t",t:"c",ipa:"/t/"}],hint:"'oo' makes a long ooo sound. 'ou' in out sounds like ow."},
   {word:"sandwich",target:"sandwich",sentence:"Mary is buying a tuna sandwich for her brother.",meaning:"Two slices of bread with a filling in between.",phonemes:[{p:"s",t:"c",ipa:"/s/"},{p:"a",t:"v",ipa:"/æ/ a"},{p:"nd",t:"b",ipa:"/nd/"},{p:"w",t:"c",ipa:"/w/"},{p:"i",t:"v",ipa:"/ɪ/ ih"},{p:"ch",t:"d",ipa:"/tʃ/ ch"}],hint:"'ch' makes a ch sound like chip. 'nd' blends n and d together."},
-  {word:"yelled",target:"yelled",sentence:"Sally yelled in pain during her injection.",meaning:"Shouted very loudly, often because of pain or excitement.",phonemes:[{p:"y",t:"c",ipa:"/j/ y"},{p:"e",t:"v",ipa:"/ɛ/ eh"},{p:"ll",t:"c",ipa:"/l/"},{p:"ed",t:"d",ipa:"/d/ past"}],hint:"'y' sounds like j as in yes. Double ll is just one l sound."},
-  {word:"some",target:"Some",sentence:"Some pupils have forgotten to do their homework.",meaning:"A number of people or things — not all of them.",phonemes:[{p:"s",t:"c",ipa:"/s/"},{p:"o",t:"v",ipa:"/ʌ/ uh"},{p:"m",t:"c",ipa:"/m/"},{p:"e",t:"s",ipa:"silent"}],hint:"Tricky word! The 'o' sounds like 'uh' and the 'e' at the end is completely silent."},
+  {word:"yelled",target:"yelled",sentence:"Sally yelled in pain during her injection.",meaning:"Shouted very loudly, often because of pain or excitement.",phonemes:[{p:"y",t:"c",ipa:"/j/"},{p:"e",t:"v",ipa:"/ɛ/ eh"},{p:"ll",t:"c",ipa:"/l/"},{p:"ed",t:"d",ipa:"/d/"}],hint:"'y' sounds like j as in yes. Double ll is just one l sound."},
+  {word:"some",target:"Some",sentence:"Some pupils have forgotten to do their homework.",meaning:"A number of people or things — not all of them.",phonemes:[{p:"s",t:"c",ipa:"/s/"},{p:"o",t:"v",ipa:"/ʌ/ uh"},{p:"m",t:"c",ipa:"/m/"},{p:"e",t:"s",ipa:"silent"}],hint:"The 'o' sounds like 'uh' and the 'e' at the end is completely silent."},
   {word:"giant",target:"giant",sentence:"My sister screamed when she found a giant cockroach in the kitchen.",meaning:"Extremely large — much bigger than normal.",phonemes:[{p:"g",t:"c",ipa:"/dʒ/ j"},{p:"i",t:"v",ipa:"/aɪ/ eye"},{p:"a",t:"v",ipa:"/æ/ a"},{p:"n",t:"c",ipa:"/n/"},{p:"t",t:"c",ipa:"/t/"}],hint:"'g' before 'i' makes a soft j sound — like giraffe."},
   {word:"bread",target:"bread",sentence:"I eat bread with jam every morning.",meaning:"A baked food made from flour, often eaten with butter or jam.",phonemes:[{p:"br",t:"b",ipa:"/br/"},{p:"ea",t:"d",ipa:"/ɛ/ eh"},{p:"d",t:"c",ipa:"/d/"}],hint:"'ea' sounds like short e here — like in head and dead."},
-  {word:"sting",target:"sting",sentence:"The scorpion's sting is poisonous.",meaning:"A sharp painful poke from an insect, or the pointed part that causes it.",phonemes:[{p:"st",t:"b",ipa:"/st/"},{p:"i",t:"v",ipa:"/ɪ/ ih"},{p:"ng",t:"d",ipa:"/ŋ/ ng"}],hint:"'st' blends s and t. 'ng' makes the ng sound — like ring and sing."},
+  {word:"sting",target:"sting",sentence:"The scorpion's sting is poisonous.",meaning:"A sharp painful poke from an insect.",phonemes:[{p:"st",t:"b",ipa:"/st/"},{p:"i",t:"v",ipa:"/ɪ/ ih"},{p:"ng",t:"d",ipa:"/ŋ/ ng"}],hint:"'st' blends s and t. 'ng' makes the ng sound — like ring and sing."},
   {word:"tasty",target:"tasty",sentence:"I am looking forward to eating my grandmother's tasty cooked food.",meaning:"Food that has a very nice, delicious flavour.",phonemes:[{p:"t",t:"c",ipa:"/t/"},{p:"a",t:"v",ipa:"/æ/ a"},{p:"st",t:"b",ipa:"/st/"},{p:"y",t:"c",ipa:"/iː/ ee"}],hint:"'st' blends s and t. 'y' at the end sounds like a long ee."},
-  {word:"soup",target:"soup",sentence:'The giant bellowed at the villagers, "Make me some soup now!"',meaning:"A hot liquid food made by cooking ingredients in water.",phonemes:[{p:"s",t:"c",ipa:"/s/"},{p:"ou",t:"d",ipa:"/uː/ oo"},{p:"p",t:"c",ipa:"/p/"}],hint:"'ou' in soup sounds like the long oo in moon."},
+  {word:"soup",target:"soup",sentence:"The giant bellowed at the villagers, Make me some soup now!",meaning:"A hot liquid food made by cooking ingredients in water.",phonemes:[{p:"s",t:"c",ipa:"/s/"},{p:"ou",t:"d",ipa:"/uː/ oo"},{p:"p",t:"c",ipa:"/p/"}],hint:"'ou' in soup sounds like the long oo in moon."},
  ]},
  {week:7,words:[
   {word:"butter",target:"butter",sentence:"I love to eat bread with peanut butter.",meaning:"A soft yellow food made from cream, spread on bread.",phonemes:[{p:"b",t:"c",ipa:"/b/"},{p:"u",t:"v",ipa:"/ʌ/ uh"},{p:"tt",t:"c",ipa:"/t/"},{p:"er",t:"d",ipa:"/ər/ er"}],hint:"Double 'tt' gives a short vowel. 'er' at the end sounds like ur."},
-  {word:"cover",target:"cover",sentence:"The chefs had to cover all the leftover food with plastic wrappers.",meaning:"To put something over the top of something else to hide or protect it.",phonemes:[{p:"c",t:"c",ipa:"/k/"},{p:"o",t:"v",ipa:"/ʌ/ uh"},{p:"v",t:"c",ipa:"/v/"},{p:"er",t:"d",ipa:"/ər/ er"}],hint:"'o' here sounds like uh. 'er' sounds like ur."},
-  {word:"cucumbers",target:"cucumbers",sentence:"My mother is buying cucumbers from the supermarket.",meaning:"Long green vegetables with a cool, watery inside.",phonemes:[{p:"c",t:"c",ipa:"/k/"},{p:"u",t:"v",ipa:"/juː/ yoo"},{p:"c",t:"c",ipa:"/k/"},{p:"um",t:"v",ipa:"/ʌm/"},{p:"b",t:"c",ipa:"/b/"},{p:"er",t:"d",ipa:"/ər/ er"},{p:"s",t:"c",ipa:"/z/ plural"}],hint:"Say it in parts: cu · cum · bers."},
-  {word:"tomatoes",target:"tomatoes",sentence:"The baby has cheeks as red as tomatoes.",meaning:"Round red fruits often used in cooking.",phonemes:[{p:"t",t:"c",ipa:"/t/"},{p:"o",t:"v",ipa:"/ə/ uh"},{p:"m",t:"c",ipa:"/m/"},{p:"a",t:"v",ipa:"/eɪ/ ay"},{p:"t",t:"c",ipa:"/t/"},{p:"oes",t:"d",ipa:"/əʊz/ oz"}],hint:"'a' in the middle says ay. Say it in parts: to · ma · toes."},
-  {word:"slices",target:"slices",sentence:"Karen cuts the fish fillet into two slices with a sharp knife.",meaning:"Thin flat pieces cut from something larger.",phonemes:[{p:"sl",t:"b",ipa:"/sl/"},{p:"i",t:"v",ipa:"/aɪ/ eye"},{p:"c",t:"c",ipa:"/s/"},{p:"es",t:"d",ipa:"/ɪz/ plural"}],hint:"'sl' is a blend. 'i' says eye — like in slide."},
-  {word:"place",target:"place",sentence:"The teacher told the students to place their books on the table.",meaning:"To put something somewhere carefully.",phonemes:[{p:"pl",t:"b",ipa:"/pl/"},{p:"a",t:"v",ipa:"/eɪ/ ay"},{p:"c",t:"c",ipa:"/s/"},{p:"e",t:"s",ipa:"silent"}],hint:"'pl' is a blend. 'a' says ay — the magic e at the end makes the vowel say its name."},
+  {word:"cover",target:"cover",sentence:"The chefs had to cover all the leftover food with plastic wrappers.",meaning:"To put something over the top of something else.",phonemes:[{p:"c",t:"c",ipa:"/k/"},{p:"o",t:"v",ipa:"/ʌ/ uh"},{p:"v",t:"c",ipa:"/v/"},{p:"er",t:"d",ipa:"/ər/ er"}],hint:"'o' here sounds like uh. 'er' sounds like ur."},
+  {word:"cucumbers",target:"cucumbers",sentence:"My mother is buying cucumbers from the supermarket.",meaning:"Long green vegetables with a cool, watery inside.",phonemes:[{p:"c",t:"c",ipa:"/k/"},{p:"u",t:"v",ipa:"/juː/ yoo"},{p:"c",t:"c",ipa:"/k/"},{p:"um",t:"v",ipa:"/ʌm/"},{p:"b",t:"c",ipa:"/b/"},{p:"er",t:"d",ipa:"/ər/ er"},{p:"s",t:"c",ipa:"/z/"}],hint:"Say it in parts: cu · cum · bers."},
+  {word:"tomatoes",target:"tomatoes",sentence:"The baby has cheeks as red as tomatoes.",meaning:"Round red fruits often used in cooking.",phonemes:[{p:"t",t:"c",ipa:"/t/"},{p:"o",t:"v",ipa:"/ə/ uh"},{p:"m",t:"c",ipa:"/m/"},{p:"a",t:"v",ipa:"/eɪ/ ay"},{p:"t",t:"c",ipa:"/t/"},{p:"oes",t:"d",ipa:"/əʊz/"}],hint:"'a' in the middle says ay. Say it in parts: to · ma · toes."},
+  {word:"slices",target:"slices",sentence:"Karen cuts the fish fillet into two slices with a sharp knife.",meaning:"Thin flat pieces cut from something larger.",phonemes:[{p:"sl",t:"b",ipa:"/sl/"},{p:"i",t:"v",ipa:"/aɪ/ eye"},{p:"c",t:"c",ipa:"/s/"},{p:"es",t:"d",ipa:"/ɪz/"}],hint:"'sl' is a blend. 'i' says eye — like in slide."},
+  {word:"place",target:"place",sentence:"The teacher told the students to place their books on the table.",meaning:"To put something somewhere carefully.",phonemes:[{p:"pl",t:"b",ipa:"/pl/"},{p:"a",t:"v",ipa:"/eɪ/ ay"},{p:"c",t:"c",ipa:"/s/"},{p:"e",t:"s",ipa:"silent"}],hint:"'pl' is a blend. 'a' says ay — the magic e makes the vowel say its name."},
   {word:"cheese",target:"Cheese",sentence:"Cheese comes from milk and is rich in protein.",meaning:"A food made from milk that can be hard or soft.",phonemes:[{p:"ch",t:"d",ipa:"/tʃ/ ch"},{p:"ee",t:"d",ipa:"/iː/ ee"},{p:"s",t:"c",ipa:"/z/"},{p:"e",t:"s",ipa:"silent"}],hint:"'ch' sounds like in chip. 'ee' is a long ee sound."},
-  {word:"pieces",target:"pieces",sentence:"Mrs Lim has collected a few of our art pieces which she will display in the classroom later.",meaning:"Separate parts or items of something.",phonemes:[{p:"p",t:"c",ipa:"/p/"},{p:"ie",t:"d",ipa:"/iː/ ee"},{p:"c",t:"c",ipa:"/s/"},{p:"es",t:"d",ipa:"/ɪz/ plural"}],hint:"'ie' says ee — like in field."},
-  {word:"lettuce",target:"lettuce",sentence:"I enjoy eating green leafy vegetables like lettuce.",meaning:"A leafy green vegetable often used in salads.",phonemes:[{p:"l",t:"c",ipa:"/l/"},{p:"e",t:"v",ipa:"/ɛ/ eh"},{p:"tt",t:"c",ipa:"/t/"},{p:"uce",t:"d",ipa:"/ɪs/ is"}],hint:"Double 'tt' gives a short vowel. The 'uce' ending sounds like iss."},
+  {word:"pieces",target:"pieces",sentence:"Mrs Lim has collected a few of our art pieces which she will display in the classroom later.",meaning:"Separate parts or items of something.",phonemes:[{p:"p",t:"c",ipa:"/p/"},{p:"ie",t:"d",ipa:"/iː/ ee"},{p:"c",t:"c",ipa:"/s/"},{p:"es",t:"d",ipa:"/ɪz/"}],hint:"'ie' says ee — like in field."},
+  {word:"lettuce",target:"lettuce",sentence:"I enjoy eating green leafy vegetables like lettuce.",meaning:"A leafy green vegetable often used in salads.",phonemes:[{p:"l",t:"c",ipa:"/l/"},{p:"e",t:"v",ipa:"/ɛ/ eh"},{p:"tt",t:"c",ipa:"/t/"},{p:"uce",t:"d",ipa:"/ɪs/"}],hint:"Double 'tt' gives a short vowel. The 'uce' ending sounds like iss."},
   {word:"spread",target:"spread",sentence:"We cover our mouths when we sneeze so that germs will not spread.",meaning:"To move or cause something to move over a wider area.",phonemes:[{p:"spr",t:"b",ipa:"/spr/"},{p:"ea",t:"d",ipa:"/ɛ/ eh"},{p:"d",t:"c",ipa:"/d/"}],hint:"'spr' is a three-letter blend. 'ea' sounds like short e here."},
  ]},
  {week:8,words:[
   {word:"honey",target:"honey",sentence:"My mother is adding a teaspoon of honey to her tea to sweeten it.",meaning:"A sweet, sticky liquid made by bees.",phonemes:[{p:"h",t:"c",ipa:"/h/"},{p:"o",t:"v",ipa:"/ʌ/ uh"},{p:"n",t:"c",ipa:"/n/"},{p:"ey",t:"d",ipa:"/iː/ ee"}],hint:"'o' sounds like uh. 'ey' at the end sounds like ee."},
-  {word:"hungry",target:"hungry",sentence:"Donna's stomach is growling as she is hungry.",meaning:"Feeling the need to eat food.",phonemes:[{p:"h",t:"c",ipa:"/h/"},{p:"u",t:"v",ipa:"/ʌ/ uh"},{p:"ng",t:"d",ipa:"/ŋ/ ng"},{p:"gr",t:"b",ipa:"/gr/"},{p:"y",t:"c",ipa:"/iː/ ee"}],hint:"'ng' makes the ng sound. 'gr' is a blend. 'y' at the end sounds like ee."},
+  {word:"hungry",target:"hungry",sentence:"Donna's stomach is growling as she is hungry.",meaning:"Feeling the need to eat food.",phonemes:[{p:"h",t:"c",ipa:"/h/"},{p:"u",t:"v",ipa:"/ʌ/ uh"},{p:"ng",t:"d",ipa:"/ŋ/"},{p:"gr",t:"b",ipa:"/gr/"},{p:"y",t:"c",ipa:"/iː/ ee"}],hint:"'ng' makes the ng sound. 'gr' is a blend. 'y' at the end sounds like ee."},
   {word:"licks",target:"licks",sentence:"The cat licks its paws when it wants to clean itself.",meaning:"Passes the tongue over something.",phonemes:[{p:"l",t:"c",ipa:"/l/"},{p:"i",t:"v",ipa:"/ɪ/ ih"},{p:"ck",t:"d",ipa:"/k/"},{p:"s",t:"c",ipa:"/s/"}],hint:"'ck' makes a k sound — used after a short vowel."},
   {word:"buzz",target:"buzz",sentence:"The buzz of my father's handphone woke him up.",meaning:"A low humming sound, like the sound a bee makes.",phonemes:[{p:"b",t:"c",ipa:"/b/"},{p:"u",t:"v",ipa:"/ʌ/ uh"},{p:"zz",t:"c",ipa:"/z/"}],hint:"Double 'zz' makes one z sound. Short 'u' says uh."},
-  {word:"tunnel",target:"tunnel",sentence:"My brother got scared when the train went through the dark tunnel.",meaning:"A long underground passage.",phonemes:[{p:"t",t:"c",ipa:"/t/"},{p:"u",t:"v",ipa:"/ʌ/ uh"},{p:"nn",t:"c",ipa:"/n/"},{p:"el",t:"d",ipa:"/əl/ ul"}],hint:"Double 'nn' is just one n sound. 'el' at the end sounds like ul."},
+  {word:"tunnel",target:"tunnel",sentence:"My brother got scared when the train went through the dark tunnel.",meaning:"A long underground passage.",phonemes:[{p:"t",t:"c",ipa:"/t/"},{p:"u",t:"v",ipa:"/ʌ/ uh"},{p:"nn",t:"c",ipa:"/n/"},{p:"el",t:"d",ipa:"/əl/"}],hint:"Double 'nn' is just one n sound. 'el' at the end sounds like ul."},
   {word:"beehive",target:"beehive",sentence:"I can see the bees going in and out of their beehive.",meaning:"The home where bees live together.",phonemes:[{p:"b",t:"c",ipa:"/b/"},{p:"ee",t:"d",ipa:"/iː/ ee"},{p:"h",t:"c",ipa:"/h/"},{p:"i",t:"v",ipa:"/aɪ/ eye"},{p:"v",t:"c",ipa:"/v/"},{p:"e",t:"s",ipa:"silent"}],hint:"Two words joined: bee + hive. 'ee' says ee. 'i' in hive says eye."},
-  {word:"fluttering",target:"fluttering",sentence:"The moth that is trapped inside the lamp is fluttering around.",meaning:"Moving wings rapidly — to flap quickly.",phonemes:[{p:"fl",t:"b",ipa:"/fl/"},{p:"u",t:"v",ipa:"/ʌ/ uh"},{p:"tt",t:"c",ipa:"/t/"},{p:"er",t:"d",ipa:"/ər/ er"},{p:"ing",t:"d",ipa:"/ɪŋ/ ing"}],hint:"'fl' is a blend. Double 'tt' gives a short vowel. 'ing' is a suffix."},
-  {word:"drinking nectar",target:"drinking nectar",sentence:"The bees are drinking nectar from the flowers in my garden.",meaning:"Drinking the sweet liquid found inside flowers.",phonemes:[{p:"dr",t:"b",ipa:"/dr/"},{p:"i",t:"v",ipa:"/ɪ/ ih"},{p:"nk",t:"d",ipa:"/ŋk/"},{p:"ing",t:"d",ipa:"/ɪŋ/"},{p:"n",t:"c",ipa:"/n/"},{p:"ec",t:"v",ipa:"/ɛk/"},{p:"t",t:"c",ipa:"/t/"},{p:"ar",t:"d",ipa:"/ər/ er"}],hint:"'dr' is a blend. Nectar: neck · tar. Two words together."},
+  {word:"fluttering",target:"fluttering",sentence:"The moth that is trapped inside the lamp is fluttering around.",meaning:"Moving wings rapidly — to flap quickly.",phonemes:[{p:"fl",t:"b",ipa:"/fl/"},{p:"u",t:"v",ipa:"/ʌ/ uh"},{p:"tt",t:"c",ipa:"/t/"},{p:"er",t:"d",ipa:"/ər/"},{p:"ing",t:"d",ipa:"/ɪŋ/"}],hint:"'fl' is a blend. Double 'tt' gives a short vowel. 'ing' is a suffix."},
+  {word:"drinking nectar",target:"drinking nectar",sentence:"The bees are drinking nectar from the flowers in my garden.",meaning:"Drinking the sweet liquid found inside flowers.",phonemes:[{p:"dr",t:"b",ipa:"/dr/"},{p:"i",t:"v",ipa:"/ɪ/ ih"},{p:"nk",t:"d",ipa:"/ŋk/"},{p:"ing",t:"d",ipa:"/ɪŋ/"},{p:"n",t:"c",ipa:"/n/"},{p:"ec",t:"v",ipa:"/ɛk/"},{p:"t",t:"c",ipa:"/t/"},{p:"ar",t:"d",ipa:"/ər/"}],hint:"'dr' is a blend. Nectar: neck · tar. Two words together."},
   {word:"queen bee",target:"queen bee",sentence:"The queen bee does not need to look for food.",meaning:"The most important female bee in a hive.",phonemes:[{p:"qu",t:"d",ipa:"/kw/"},{p:"ee",t:"d",ipa:"/iː/ ee"},{p:"n",t:"c",ipa:"/n/"},{p:"b",t:"c",ipa:"/b/"},{p:"ee",t:"d",ipa:"/iː/ ee"}],hint:"'qu' always sounds like kw. Both 'ee' sounds are long ee. Two words together."},
-  {word:"eating pollen",target:"eating pollen",sentence:"The bird is eating pollen from the orchid.",meaning:"Consuming the fine yellow powder from flowers.",phonemes:[{p:"ea",t:"d",ipa:"/iː/ ee"},{p:"t",t:"c",ipa:"/t/"},{p:"ing",t:"d",ipa:"/ɪŋ/"},{p:"p",t:"c",ipa:"/p/"},{p:"o",t:"v",ipa:"/ɒ/ o"},{p:"ll",t:"c",ipa:"/l/"},{p:"en",t:"d",ipa:"/ən/ un"}],hint:"'ea' in eating says ee. Pollen: pol · len. Two words together."},
+  {word:"eating pollen",target:"eating pollen",sentence:"The bird is eating pollen from the orchid.",meaning:"Consuming the fine yellow powder from flowers.",phonemes:[{p:"ea",t:"d",ipa:"/iː/ ee"},{p:"t",t:"c",ipa:"/t/"},{p:"ing",t:"d",ipa:"/ɪŋ/"},{p:"p",t:"c",ipa:"/p/"},{p:"o",t:"v",ipa:"/ɒ/ o"},{p:"ll",t:"c",ipa:"/l/"},{p:"en",t:"d",ipa:"/ən/"}],hint:"'ea' in eating says ee. Pollen: pol · len. Two words together."},
  ]},
  {week:9,words:[
-  {word:"on the ground",target:"on the ground",sentence:"My brother dropped his wallet on the ground.",meaning:"On the surface of the earth beneath our feet.",phonemes:[{p:"o",t:"v",ipa:"/ɒ/ o"},{p:"n",t:"c",ipa:"/n/"},{p:"th",t:"d",ipa:"/ð/ th"},{p:"gr",t:"b",ipa:"/gr/"},{p:"ou",t:"d",ipa:"/aʊ/ ow"},{p:"nd",t:"b",ipa:"/nd/"}],hint:"'th' makes the th sound. 'gr' is a blend. 'ou' in ground sounds like ow."},
+  {word:"on the ground",target:"on the ground",sentence:"My brother dropped his wallet on the ground.",meaning:"On the surface of the earth beneath our feet.",phonemes:[{p:"o",t:"v",ipa:"/ɒ/ o"},{p:"n",t:"c",ipa:"/n/"},{p:"th",t:"d",ipa:"/ð/"},{p:"gr",t:"b",ipa:"/gr/"},{p:"ou",t:"d",ipa:"/aʊ/ ow"},{p:"nd",t:"b",ipa:"/nd/"}],hint:"'th' makes the th sound. 'gr' is a blend. 'ou' in ground sounds like ow."},
   {word:"nest",target:"nest",sentence:"A pigeon is living in the nest on top of this tree.",meaning:"A home built by birds, usually made of twigs and grass.",phonemes:[{p:"n",t:"c",ipa:"/n/"},{p:"e",t:"v",ipa:"/ɛ/ eh"},{p:"st",t:"b",ipa:"/st/"}],hint:"'st' is a blend at the end. Short 'e' says eh."},
   {word:"queen ant",target:"queen ant",sentence:"The queen ant is the mother of all the ants in the colony.",meaning:"The most important female ant in a colony.",phonemes:[{p:"qu",t:"d",ipa:"/kw/"},{p:"ee",t:"d",ipa:"/iː/ ee"},{p:"n",t:"c",ipa:"/n/"},{p:"a",t:"v",ipa:"/æ/ a"},{p:"n",t:"c",ipa:"/n/"},{p:"t",t:"c",ipa:"/t/"}],hint:"'qu' sounds like kw. 'ee' is long ee. Two words together."},
-  {word:"laying eggs",target:"laying eggs",sentence:"The ducks in my barn are laying eggs.",meaning:"Producing eggs from the body.",phonemes:[{p:"l",t:"c",ipa:"/l/"},{p:"ay",t:"d",ipa:"/eɪ/ ay"},{p:"ing",t:"d",ipa:"/ɪŋ/"},{p:"e",t:"v",ipa:"/ɛ/ eh"},{p:"gg",t:"c",ipa:"/g/"},{p:"s",t:"c",ipa:"/z/ plural"}],hint:"'ay' makes the ay sound. 'gg' is just one g sound. Two words together."},
+  {word:"laying eggs",target:"laying eggs",sentence:"The ducks in my barn are laying eggs.",meaning:"Producing eggs from the body.",phonemes:[{p:"l",t:"c",ipa:"/l/"},{p:"ay",t:"d",ipa:"/eɪ/ ay"},{p:"ing",t:"d",ipa:"/ɪŋ/"},{p:"e",t:"v",ipa:"/ɛ/ eh"},{p:"gg",t:"c",ipa:"/g/"},{p:"s",t:"c",ipa:"/z/"}],hint:"'ay' makes the ay sound. 'gg' is just one g sound. Two words together."},
   {word:"marching",target:"marching",sentence:"The soldiers are marching on the field.",meaning:"Walking with regular steps in a group, like soldiers.",phonemes:[{p:"m",t:"c",ipa:"/m/"},{p:"ar",t:"d",ipa:"/ɑː/ ar"},{p:"ch",t:"d",ipa:"/tʃ/ ch"},{p:"ing",t:"d",ipa:"/ɪŋ/"}],hint:"'ar' sounds like ar in car. 'ch' sounds like in chip."},
-  {word:"scurrying",target:"scurrying",sentence:"Everyone is scurrying for shelter as it is raining.",meaning:"Moving quickly with short fast steps — like a mouse.",phonemes:[{p:"sc",t:"b",ipa:"/sk/"},{p:"ur",t:"d",ipa:"/ɜː/ ur"},{p:"r",t:"c",ipa:"/r/"},{p:"y",t:"v",ipa:"/iː/ ee"},{p:"ing",t:"d",ipa:"/ɪŋ/"}],hint:"'sc' sounds like sk. 'ur' says ur — like in hurt."},
+  {word:"scurrying",target:"scurrying",sentence:"Everyone is scurrying for shelter as it is raining.",meaning:"Moving quickly with short fast steps — like a mouse.",phonemes:[{p:"sc",t:"b",ipa:"/sk/"},{p:"ur",t:"d",ipa:"/ɜː/ ur"},{p:"r",t:"c",ipa:"/r/"},{p:"y",t:"v",ipa:"/iː/"},{p:"ing",t:"d",ipa:"/ɪŋ/"}],hint:"'sc' sounds like sk. 'ur' says ur — like in hurt."},
   {word:"crawling",target:"crawling",sentence:"My brother screamed when he saw a bug crawling on the floor.",meaning:"Moving slowly on hands and knees, or close to the ground.",phonemes:[{p:"cr",t:"b",ipa:"/kr/"},{p:"aw",t:"d",ipa:"/ɔː/ aw"},{p:"l",t:"c",ipa:"/l/"},{p:"ing",t:"d",ipa:"/ɪŋ/"}],hint:"'cr' is a blend. 'aw' makes the aw sound — like in claw and draw."},
   {word:"sleeping",target:"sleeping",sentence:"Alfred was scolded for sleeping in class.",meaning:"Being in a state of rest with your eyes closed.",phonemes:[{p:"sl",t:"b",ipa:"/sl/"},{p:"ee",t:"d",ipa:"/iː/ ee"},{p:"p",t:"c",ipa:"/p/"},{p:"ing",t:"d",ipa:"/ɪŋ/"}],hint:"'sl' is a blend. 'ee' makes a long ee sound."},
-  {word:"nibble",target:"nibble",sentence:"When my friends are not too hungry during snack time, they nibble on biscuits.",meaning:"To eat something by taking small bites.",phonemes:[{p:"n",t:"c",ipa:"/n/"},{p:"i",t:"v",ipa:"/ɪ/ ih"},{p:"bb",t:"c",ipa:"/b/"},{p:"le",t:"d",ipa:"/əl/ ul"}],hint:"Double 'bb' gives a short vowel. 'le' at the end sounds like ul."},
+  {word:"nibble",target:"nibble",sentence:"When my friends are not too hungry during snack time, they nibble on biscuits.",meaning:"To eat something by taking small bites.",phonemes:[{p:"n",t:"c",ipa:"/n/"},{p:"i",t:"v",ipa:"/ɪ/ ih"},{p:"bb",t:"c",ipa:"/b/"},{p:"le",t:"d",ipa:"/əl/"}],hint:"Double 'bb' gives a short vowel. 'le' at the end sounds like ul."},
   {word:"suck",target:"suck",sentence:"The babies in the nursery had to suck the milk from their milk bottles.",meaning:"To draw liquid into the mouth using the lips and tongue.",phonemes:[{p:"s",t:"c",ipa:"/s/"},{p:"u",t:"v",ipa:"/ʌ/ uh"},{p:"ck",t:"d",ipa:"/k/"}],hint:"'ck' makes a k sound after a short vowel."},
  ]},
  {week:10,words:[
@@ -185,7 +179,7 @@ const ALL_WEEKS=[
   {word:"have",target:"have",sentence:"They wanted to have chicken rice for dinner.",meaning:"To own or possess something.",phonemes:[{p:"h",t:"c",ipa:"/h/"},{p:"a",t:"v",ipa:"/æ/ a"},{p:"v",t:"c",ipa:"/v/"},{p:"e",t:"s",ipa:"silent"}],hint:"Short 'a' says a. The 'e' at the end is silent."},
   {word:"through",target:"through",sentence:"The cat crawled through the tunnel.",meaning:"Moving in one side and out the other side.",phonemes:[{p:"thr",t:"b",ipa:"/θr/"},{p:"ough",t:"d",ipa:"/uː/ oo"}],hint:"'thr' is a three-letter blend. 'ough' here sounds like oo."},
   {word:"but",target:"but",sentence:"We wanted to go for a picnic but it rained.",meaning:"Used to introduce something different or opposite.",phonemes:[{p:"b",t:"c",ipa:"/b/"},{p:"u",t:"v",ipa:"/ʌ/ uh"},{p:"t",t:"c",ipa:"/t/"}],hint:"Short 'u' says uh — as in cut and hut."},
-  {word:"what",target:"What",sentence:'"What would you like to order?" the waiter asked.',meaning:"Used to ask about something unknown.",phonemes:[{p:"wh",t:"d",ipa:"/w/ wh"},{p:"a",t:"v",ipa:"/ɒ/ o"},{p:"t",t:"c",ipa:"/t/"}],hint:"'wh' sounds like w. 'a' in what sounds like o."},
+  {word:"what",target:"What",sentence:"What would you like to order, the waiter asked.",meaning:"Used to ask about something unknown.",phonemes:[{p:"wh",t:"d",ipa:"/w/"},{p:"a",t:"v",ipa:"/ɒ/ o"},{p:"t",t:"c",ipa:"/t/"}],hint:"'wh' sounds like w. 'a' in what sounds like o."},
   {word:"were",target:"were",sentence:"There were many people in the park.",meaning:"The past tense of 'are'.",phonemes:[{p:"w",t:"c",ipa:"/w/"},{p:"ere",t:"d",ipa:"/ɜː/ ur"}],hint:"'ere' sounds like ur — like in her and stir."},
  ]},
 ];
@@ -193,15 +187,18 @@ const ALL_WEEKS=[
 const TCLS={v:"v",c:"c",b:"b",d:"d",s:"s"};
 const TNAME={v:"Vowel",c:"Consonant",b:"Blend",d:"Digraph",s:"Silent"};
 
-function loadState(){try{return JSON.parse(localStorage.getItem("spellingStarsV3")||"{}");}catch(e){return{};}}
-function saveState(){try{localStorage.setItem("spellingStarsV3",JSON.stringify(appState));}catch(e){}}
-let appState=loadState();
-if(!appState.weekScores)appState.weekScores={};
+// ── STATE ──
+function loadState(){try{return JSON.parse(localStorage.getItem("spStarsV4")||"{}");}catch(e){return{};}}
+function saveState(){try{localStorage.setItem("spStarsV4",JSON.stringify(ST));}catch(e){}}
+let ST=loadState();
+if(!ST.scores)ST.scores={};
 
-let activeWeek=null,cur=0,scores=[],mode="learn",inp="",fb="",tries=0;
-// test state
-let testAnswers=[],testSubmitted=false;
+// current session
+let W=null; // active week object
+let cur=0,practiceScores=[],mode="learn",inp="",fb="",tries=0;
+let testAns=[],testDone=false;
 
+// ── VOICE ──
 let voice=null;
 function initVoice(){
   const vs=speechSynthesis.getVoices();
@@ -209,371 +206,274 @@ function initVoice(){
   voice=vs.find(v=>v.name==="Samantha")||vs.find(v=>v.name.includes("Samantha"))||vs.find(v=>v.lang==="en-US"&&!/male/i.test(v.name))||vs.find(v=>v.lang.startsWith("en"));
 }
 speechSynthesis.onvoiceschanged=initVoice;
-setTimeout(initVoice,400);
+setTimeout(initVoice,500);
 
-function speak(text,rate){
+function speak(txt,rate){
   speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(text);
+  const u=new SpeechSynthesisUtterance(txt);
   if(voice){u.voice=voice;u.lang=voice.lang;}else u.lang="en-US";
   u.rate=rate||0.78;u.pitch=1.45;
   speechSynthesis.speak(u);
 }
 
-// Read sentence then repeat the target word
-function speakTestItem(idx){
-  const w=activeWeek.words[idx];
+function speakTestQ(i){
+  const w=W.words[i];
   speechSynthesis.cancel();
   document.querySelectorAll(".test-spk").forEach(b=>b.classList.remove("playing"));
-  const btn=document.getElementById("tspk-"+idx);
+  const btn=document.getElementById("tspk"+i);
   if(btn)btn.classList.add("playing");
-  const u1=new SpeechSynthesisUtterance(w.sentence);
+  const u1=new SpeechSynthesisUtterance(w.word);
   if(voice){u1.voice=voice;u1.lang=voice.lang;}
-  u1.rate=0.78;u1.pitch=1.45;
+  u1.rate=0.65;u1.pitch=1.45;
   u1.onend=()=>{
     setTimeout(()=>{
       const u2=new SpeechSynthesisUtterance(w.word);
       if(voice){u2.voice=voice;u2.lang=voice.lang;}
-      u2.rate=0.65;u2.pitch=1.45;
-      u2.onend=()=>{
-        setTimeout(()=>{
-          const u3=new SpeechSynthesisUtterance(w.word);
-          if(voice){u3.voice=voice;u3.lang=voice.lang;}
-          u3.rate=0.58;u3.pitch=1.45;
-          u3.onend=()=>{if(btn)btn.classList.remove("playing");};
-          speechSynthesis.speak(u3);
-        },300);
-      };
+      u2.rate=0.58;u2.pitch=1.45;
+      u2.onend=()=>{if(btn)btn.classList.remove("playing");};
       speechSynthesis.speak(u2);
     },400);
   };
   speechSynthesis.speak(u1);
 }
 
-function spkSVG(s=20){
-  return`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>`;
-}
+// ── HELPERS ──
+function spkSVG(s){s=s||20;return'<svg width="'+s+'" height="'+s+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>';}
 
-function starRow(n,total){
-  let s="";
-  for(let i=0;i<total;i++)s+=i<n?`<span style="color:#f5c842">★</span>`:`<span style="color:#ddd">★</span>`;
+function starRow(n,tot){
+  var s="";
+  for(var i=0;i<tot;i++)s+=i<n?'<span style="color:#f5c842">★</span>':'<span style="color:#ddd">★</span>';
   return s;
 }
 
-function highlightSentence(sentence,target){
-  const esc=target.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
-  return sentence.replace(new RegExp(esc,"i"),m=>`<span class="tw">${m}</span>`);
+function hlSent(sent,tgt){
+  return sent.replace(new RegExp(tgt.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),"i"),function(m){return'<span class="tw">'+m+'</span>';});
 }
-function blankSentence(sentence,target){
-  const esc=target.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
-  return sentence.replace(new RegExp(esc,"i"),`<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`);
+function blankSent(sent,tgt){
+  return sent.replace(new RegExp(tgt.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),"i"),'<span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>');
 }
 
-/* ── HOME ── */
-function renderHome(){
-  const cards=ALL_WEEKS.map(wk=>{
-    const sc=appState.weekScores[wk.week];
-    const hasWords=wk.words.length>0;
-    const isPerfect=sc&&sc.stars===wk.words.length;
-    const isActive=hasWords&&!isPerfect;
-    let starsHtml="",scoreHtml="";
-    if(sc){starsHtml=`<div style="font-size:10px;">${starRow(sc.stars,sc.total)}</div>`;scoreHtml=`${sc.stars}/${sc.total}`;}
-    else if(!hasWords){starsHtml=`<span style="font-size:10px;color:#ccc">Soon</span>`;}
-    else{starsHtml=`<span style="font-size:10px;color:#ccc">Not started</span>`;}
-    return`<div class="week-card${hasWords?" has-words":""}${isPerfect?" perfect":""}${isActive?" active":""}" onclick="${hasWords?`startWeek(${wk.week})`:""}">
-      <div class="wk-label">Week ${wk.week}</div>
-      <div class="wk-stars">${starsHtml}</div>
-      <div class="wk-score">${scoreHtml}</div>
-    </div>`;
+function setHTML(html){document.getElementById("root").innerHTML=html;}
+
+// ── HOME ──
+function showHome(){
+  speechSynthesis.cancel();
+  W=null;
+  var cards=WEEKS.map(function(wk){
+    var sc=ST.scores[wk.week];
+    var done=sc&&sc.stars===wk.words.length;
+    var cls="week-card has-words"+(done?" perfect":" active");
+    var starsHtml=sc?'<div style="font-size:10px;">'+starRow(sc.stars,sc.total)+'</div>':'<span style="font-size:10px;color:#ccc">Not started</span>';
+    var scoreHtml=sc?sc.stars+"/"+sc.total:"";
+    return'<div class="'+cls+'" onclick="startWeek('+wk.week+')"><div class="wk-label">Week '+wk.week+'</div><div class="wk-stars">'+starsHtml+'</div><div class="wk-score">'+scoreHtml+'</div></div>';
   }).join("");
-  const nextWeek=ALL_WEEKS.find(w=>w.words.length>0&&(!appState.weekScores[w.week]||appState.weekScores[w.week].stars<w.words.length));
-  const btnWeek=nextWeek?nextWeek.week:ALL_WEEKS.find(w=>w.words.length>0).week;
-  const btnLabel=nextWeek?(appState.weekScores[nextWeek.week]?"Try Week "+nextWeek.week+" again →":"Start Week "+nextWeek.week+" →"):"Practice again!";
-  document.getElementById("root").innerHTML=`
-  <div class="trophy-screen">
-    <h2>My Spelling Stars</h2>
-    <p class="tsub">Get all 10 stars in a week to earn your chocolate! 🍫</p>
-    <div class="weeks-grid">${cards}</div>
-    <button class="start-btn" onclick="startWeek(${btnWeek})">${btnLabel}</button>
-  </div>`;
+  var next=WEEKS.find(function(w){return!ST.scores[w.week]||ST.scores[w.week].stars<w.words.length;});
+  var btnW=next?next.week:WEEKS[0].week;
+  var btnL=next?(ST.scores[next.week]?"Try Week "+next.week+" again →":"Start Week "+next.week+" →"):"Practice again!";
+  setHTML('<div class="trophy-screen"><h2>My Spelling Stars</h2><p class="tsub">Get all 10 stars in a week to earn your chocolate! 🍫</p><div class="weeks-grid">'+cards+'</div><button class="start-btn" onclick="startWeek('+btnW+')">'+btnL+'</button></div>');
 }
 
+// ── START WEEK ──
 function startWeek(wkNum){
-  const wk=ALL_WEEKS.find(w=>w.week===wkNum);
-  if(!wk||!wk.words.length)return;
-  activeWeek=wk;cur=0;scores=[];mode="learn";inp="";fb="";tries=0;
-  testAnswers=activeWeek.words.map(()=>"");
-  testSubmitted=false;
-  renderSpelling();
+  W=WEEKS.find(function(w){return w.week===wkNum;});
+  if(!W)return;
+  cur=0;practiceScores=[];mode="learn";inp="";fb="";tries=0;
+  testAns=W.words.map(function(){return"";});testDone=false;
+  showPractice();
 }
 
-function renderSpelling(){
-  document.getElementById("root").innerHTML=`
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;">
-    <button class="act" style="font-size:12px;padding:6px 12px;" onclick="goHome()">← Home</button>
-    <span style="font-size:12px;color:#888;font-weight:600;">Week ${activeWeek.week}</span>
-    <span id="hdr-stars" style="font-size:13px;">${starRow(0,activeWeek.words.length)}</span>
-  </div>
-  <div class="pips" id="pips"></div>
-  <div id="main"></div>`;
-  renderPips();renderMain();
+// ── PRACTICE WRAPPER ──
+function showPractice(){
+  setHTML(
+    '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;">'+
+    '<button class="act" style="font-size:12px;padding:6px 12px;" onclick="showHome()">← Home</button>'+
+    '<span style="font-size:12px;color:#888;font-weight:600;">Week '+W.week+'</span>'+
+    '<span id="hstars" style="font-size:13px;">'+starRow(0,W.words.length)+'</span>'+
+    '</div>'+
+    '<div class="pips" id="pips"></div>'+
+    '<div id="main"></div>'
+  );
+  drawPips();drawMain();
 }
 
-function renderPips(){
-  const el=document.getElementById("pips");
-  if(!el)return;
-  el.innerHTML=activeWeek.words.map((_,i)=>{
-    let c="pip";
-    if(scores[i]!==undefined)c+=" done";
+function drawPips(){
+  var el=document.getElementById("pips");if(!el)return;
+  el.innerHTML=W.words.map(function(_,i){
+    var c="pip";
+    if(practiceScores[i]!==undefined)c+=" done";
     else if(i===cur)c+=" cur";
-    return`<div class="${c}"></div>`;
+    return'<div class="'+c+'"></div>';
   }).join("");
 }
 
-function updateHeaderStars(){
-  const el=document.getElementById("hdr-stars");
-  if(el)el.innerHTML=starRow(scores.filter(Boolean).length,activeWeek.words.length);
+function updStars(){
+  var el=document.getElementById("hstars");
+  if(el)el.innerHTML=starRow(practiceScores.filter(Boolean).length,W.words.length);
 }
 
-function renderMain(){
-  const el=document.getElementById("main");
-  if(!el)return;
-  if(mode==="score")el.innerHTML=scoreHTML();
+function drawMain(){
+  var el=document.getElementById("main");if(!el)return;
+  if(mode==="learn")el.innerHTML=learnHTML();
+  else if(mode==="spell")el.innerHTML=spellHTML();
   else if(mode==="test")el.innerHTML=testHTML();
-  else if(mode==="learn")el.innerHTML=learnHTML();
-  else el.innerHTML=spellHTML();
-  if(mode==="spell"&&!fb){const si=document.getElementById("si");if(si){si.focus();si.setSelectionRange(si.value.length,si.value.length);}}
+  else if(mode==="score")el.innerHTML=scoreHTML();
+  if(mode==="spell"&&!fb){var si=document.getElementById("si");if(si){si.focus();si.setSelectionRange(si.value.length,si.value.length);}}
 }
 
-/* ── LEARN ── */
+// ── LEARN ──
 function learnHTML(){
-  const w=activeWeek.words[cur];
-  const phHTML=w.phonemes.map(ph=>`<div class="ph ${TCLS[ph.t]}">${ph.p}<span class="ipa">${ph.ipa}</span><span class="ptype">${TNAME[ph.t]}</span></div>`).join("");
-  return`<div class="card">
-  <div class="wnum">Word ${cur+1} of ${activeWeek.words.length}</div>
-  <div class="tabs">
-    <div class="tab on">Learn it</div>
-    <div class="tab" onclick="setMode('spell')">Spell it</div>
-  </div>
-  <div class="sent-row">
-    <button class="spk" onclick="speak(activeWeek.words[cur].sentence,0.78)">${spkSVG(20)}</button>
-    <div class="sent-text">${highlightSentence(w.sentence,w.target)}</div>
-  </div>
-  <div class="mean"><b>Meaning:</b> ${w.meaning}</div>
-  <div class="plabel">Jolly Phonics breakdown</div>
-  <div class="ph-row">${phHTML}</div>
-  <div class="tip">💡 ${w.hint}</div>
-  <div class="leg">
-    <div class="li"><div class="ld" style="background:#AFA9EC"></div>Vowel</div>
-    <div class="li"><div class="ld" style="background:#5DCAA5"></div>Consonant</div>
-    <div class="li"><div class="ld" style="background:#F0997B"></div>Blend</div>
-    <div class="li"><div class="ld" style="background:#FAC775"></div>Digraph</div>
-    <div class="li"><div class="ld" style="background:#ccc"></div>Silent</div>
-  </div>
-  <div class="btn-row">
-    <button class="act pri" onclick="setMode('spell')">Spell it →</button>
-    ${cur<activeWeek.words.length-1?`<button class="act" onclick="nextWord()">Next word →</button>`:""}
-    ${cur>0?`<button class="act" onclick="goBack()">← Back</button>`:""}
-  </div>
-  </div>`;
+  var w=W.words[cur];
+  var phHTML=w.phonemes.map(function(ph){return'<div class="ph '+TCLS[ph.t]+'">'+ph.p+'<span class="ipa">'+ph.ipa+'</span><span class="ptype">'+TNAME[ph.t]+'</span></div>';}).join("");
+  var sent=hlSent(w.sentence,w.target);
+  return'<div class="card">'+
+    '<div class="wnum">Word '+(cur+1)+' of '+W.words.length+'</div>'+
+    '<div class="tabs"><div class="tab on">Learn it</div><div class="tab" onclick="setMode(\'spell\')">Spell it</div><div class="tab" onclick="setMode(\'test\')">Test</div></div>'+
+    '<div class="sent-row"><button class="spk" onclick="speak(W.words[cur].sentence,0.78)">'+spkSVG(20)+'</button><div class="sent-text">'+sent+'</div></div>'+
+    '<div class="mean"><b>Meaning:</b> '+w.meaning+'</div>'+
+    '<div class="plabel">Jolly Phonics breakdown</div>'+
+    '<div class="ph-row">'+phHTML+'</div>'+
+    '<div class="tip">💡 '+w.hint+'</div>'+
+    '<div class="leg"><div class="li"><div class="ld" style="background:#AFA9EC"></div>Vowel</div><div class="li"><div class="ld" style="background:#5DCAA5"></div>Consonant</div><div class="li"><div class="ld" style="background:#F0997B"></div>Blend</div><div class="li"><div class="ld" style="background:#FAC775"></div>Digraph</div><div class="li"><div class="ld" style="background:#ccc"></div>Silent</div></div>'+
+    '<div class="btn-row">'+
+    '<button class="act pri" onclick="setMode(\'spell\')">Spell it →</button>'+
+    (cur<W.words.length-1?'<button class="act" onclick="nextWord()">Next word →</button>':'')+
+    (cur>0?'<button class="act" onclick="goBack()">← Back</button>':'')+
+    '<button class="act" onclick="setMode(\'test\')" style="margin-left:auto;border-color:#534AB7;color:#534AB7;">Go to test 📝</button>'+
+    '</div></div>';
 }
 
-/* ── SPELL ── */
+// ── SPELL ──
 function spellHTML(){
-  const w=activeWeek.words[cur];
-  const wordEsc=w.word.replace(/\\/g,"\\\\").replace(/'/g,"\\'");
-  const sentEsc=w.sentence.replace(/\\/g,"\\\\").replace(/'/g,"\\'").replace(/"/g,"&quot;");
-  let inputCls="spell-input";
-  if(fb==="good")inputCls+=" correct";
-  if(fb==="bad")inputCls+=" wrong";
-  return`<div class="card">
-  <div class="wnum">Word ${cur+1} of ${activeWeek.words.length}</div>
-  <div class="tabs">
-    <div class="tab" onclick="setMode('learn')">Learn it</div>
-    <div class="tab on">Spell it</div>
-  </div>
-  <div class="sent-row" style="margin-bottom:1.1rem;">
-    <button class="spk" onclick="speak('${sentEsc}',0.78)">${spkSVG(20)}</button>
-    <div class="sent-text">${blankSentence(w.sentence,w.target)}</div>
-  </div>
-  <button class="spell-action-btn" onclick="speak('${wordEsc}',0.62)">
-    <div class="spk-circle">${spkSVG(18)}</div>
-    <div><div class="btn-label">Spell it now</div><div class="btn-sub">Tap to hear the word, then type it below</div></div>
-  </button>
-  <input class="${inputCls}" id="si" type="text" placeholder="Type the word here…"
-    autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-    value="${inp.replace(/"/g,"&quot;")}" oninput="handleInp(this.value)" onkeydown="handleKey(event)" ${fb?"disabled":""} dir="ltr"/>
-  <div class="btn-row">
-    ${!fb?`<button class="act pri" onclick="check()">Check ✓</button>`:""}
-    ${fb==="good"&&cur<activeWeek.words.length-1?`<button class="act suc" onclick="next()">Next word →</button>`:""}
-    ${fb==="good"&&cur===activeWeek.words.length-1?`<button class="act suc" onclick="goToTest()">Take the test! 📝</button>`:""}
-    ${cur===activeWeek.words.length-1?`<button class="act" onclick="goToTest()" style="border-color:#534AB7;color:#534AB7;">Go to test →</button>`:""}
-    ${fb==="bad"?`<button class="act" onclick="retry()">Try again</button>`:""}
-    ${fb==="bad"&&tries>=2?`<button class="act" onclick="setMode('learn')">Go back to Learn it</button>`:""}
-  </div>
-  ${fb==="good"?`<div class="fb good pop">⭐ Brilliant! <b>${w.word}</b> is correct!</div>`:""}
-  ${fb==="bad"?`<div class="fb bad">Not quite — tap the speaker to hear the word again, then try!</div>`:""}
-  </div>`;
+  var w=W.words[cur];
+  var wesc=w.word.replace(/'/g,"\\'");
+  var sesc=w.sentence.replace(/'/g,"\\'").replace(/"/g,"&quot;");
+  var icls="spell-input"+(fb==="good"?" correct":fb==="bad"?" wrong":"");
+  return'<div class="card">'+
+    '<div class="wnum">Word '+(cur+1)+' of '+W.words.length+'</div>'+
+    '<div class="tabs"><div class="tab" onclick="setMode(\'learn\')">Learn it</div><div class="tab on">Spell it</div><div class="tab" onclick="setMode(\'test\')">Test</div></div>'+
+    '<div class="sent-row" style="margin-bottom:1.1rem;"><button class="spk" onclick="speak(\''+sesc+'\',0.78)">'+spkSVG(20)+'</button><div class="sent-text">'+blankSent(w.sentence,w.target)+'</div></div>'+
+    '<button class="spell-action-btn" onclick="speak(\''+wesc+'\',0.62)"><div class="spk-circle">'+spkSVG(18)+'</div><div><div class="btn-label">Spell it now</div><div class="btn-sub">Tap to hear the word, then type it below</div></div></button>'+
+    '<input class="'+icls+'" id="si" type="text" placeholder="Type the word here…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" value="'+inp.replace(/"/g,"&quot;")+'" oninput="handleInp(this.value)" onkeydown="handleKey(event)" '+(fb?"disabled":"")+' dir="ltr"/>'+
+    '<div class="btn-row">'+
+    (!fb?'<button class="act pri" onclick="chk()">Check ✓</button>':'')+
+    (fb==="good"&&cur<W.words.length-1?'<button class="act suc" onclick="next()">Next word →</button>':'')+
+    (fb==="good"&&cur===W.words.length-1?'<button class="act suc" onclick="setMode(\'test\')">Take the test! 📝</button>':'')+
+    (fb==="bad"?'<button class="act" onclick="retry()">Try again</button>':'')+
+    (fb==="bad"&&tries>=2?'<button class="act" onclick="setMode(\'learn\')">Go back to Learn it</button>':'')+
+    '<button class="act" onclick="setMode(\'test\')" style="margin-left:auto;border-color:#534AB7;color:#534AB7;">Go to test 📝</button>'+
+    '</div>'+
+    (fb==="good"?'<div class="fb good pop">⭐ Brilliant! <b>'+w.word+'</b> is correct!</div>':'')+
+    (fb==="bad"?'<div class="fb bad">Not quite — tap the speaker to hear the word again, then try!</div>':'')+
+    '</div>';
 }
 
-/* ── TEST PAGE ── */
-function goToTest(){
-  speechSynthesis.cancel();
-  testAnswers=activeWeek.words.map(()=>"");
-  testSubmitted=false;
-  mode="test";
-  // render directly into root so it's never blocked by renderSpelling wrapper
-  const el=document.getElementById("main");
-  if(el){el.innerHTML=testHTML();}
-  else{
-    // fallback: re-render full spelling screen then inject
-    document.getElementById("root").innerHTML=`
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;">
-      <button class="act" style="font-size:12px;padding:6px 12px;" onclick="goHome()">← Home</button>
-      <span style="font-size:12px;color:#888;font-weight:600;">Week ${activeWeek.week} — Test</span>
-      <span></span>
-    </div>
-    <div id="main"></div>`;
-    document.getElementById("main").innerHTML=testHTML();
-  }
-}
-
+// ── TEST ──
 function testHTML(){
-  const rows=activeWeek.words.map((w,i)=>{
-    const ans=testAnswers[i]||"";
-    let inputCls="test-input";
-    let answerHint="";
-    if(testSubmitted){
-      const correct=ans.trim().toLowerCase()===w.word.toLowerCase();
-      inputCls+=correct?" t-correct":" t-wrong";
-      if(!correct)answerHint=`<span class="test-answer">${w.word}</span>`;
+  var rows=W.words.map(function(w,i){
+    var ans=testAns[i]||"";
+    var icls="test-input";
+    var hint="";
+    if(testDone){
+      var ok=ans.trim().toLowerCase()===w.word.toLowerCase();
+      icls+=ok?" t-ok":" t-bad";
+      if(!ok)hint='<span class="test-correct-ans">'+w.word+'</span>';
     }
-    return`<div class="test-row">
-      <span class="test-num">${i+1}.</span>
-      <button class="test-spk" id="tspk-${i}" onclick="speakTestItem(${i})" title="Hear sentence and word">${spkSVG(20)}</button>
-      <input class="${inputCls}" type="text"
-        placeholder="Type answer…"
-        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-        value="${ans.replace(/"/g,"&quot;")}"
-        oninput="handleTestInp(${i},this.value)"
-        onkeydown="handleTestKey(event,${i})"
-        ${testSubmitted?"disabled":""}
-        dir="ltr"
-        id="tinput-${i}"
-      />
-      ${answerHint}
-    </div>`;
+    return'<div class="test-row">'+
+      '<span class="test-num">'+(i+1)+'.</span>'+
+      '<button class="test-spk" id="tspk'+i+'" onclick="speakTestQ('+i+')" title="Hear sentence and word">'+spkSVG(20)+'</button>'+
+      '<input class="'+icls+'" type="text" placeholder="Type answer…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" value="'+ans.replace(/"/g,"&quot;")+'" oninput="handleTestInp('+i+',this.value)" onkeydown="handleTestKey(event,'+i+')" '+(testDone?"disabled":"")+' dir="ltr" id="tinput'+i+'"/>'+
+      hint+
+      '</div>';
   }).join("");
 
-  const correct=testSubmitted?testAnswers.filter((a,i)=>a.trim().toLowerCase()===activeWeek.words[i].word.toLowerCase()).length:0;
-  const perfect=testSubmitted&&correct===activeWeek.words.length;
+  var correct=0;
+  if(testDone){correct=testAns.filter(function(a,i){return a.trim().toLowerCase()===W.words[i].word.toLowerCase();}).length;}
+  var perfect=testDone&&correct===W.words.length;
 
-  return`<div class="test-card">
-  <div class="test-header">
-    <div>
-      <h2>Week ${activeWeek.week} Test 📝</h2>
-      <p>Tap the speaker for each question, then type your answer.</p>
-    </div>
-  </div>
-  ${rows}
-  <div class="test-actions">
-    ${!testSubmitted
-      ?`<button class="act pri" onclick="submitTest()">Submit answers ✓</button>
-        <button class="act" onclick="playAllTest()">▶ Play all questions</button>`
-      :`<button class="act${perfect?"":" warn"}" onclick="retryTest()">${perfect?"Try again ↺":"Try test again →"}</button>
-        <button class="act pri" onclick="finishWeek()">See my stars! ⭐</button>`
-    }
-    <button class="act" onclick="setMode('learn')" style="margin-left:auto;">← Back to practice</button>
-  </div>
-  ${testSubmitted?`<div class="fb ${perfect?"good":"bad"}" style="margin-top:1rem;">
-    ${perfect?"⭐ Perfect! You spelled all "+activeWeek.words.length+" words correctly!":"You got "+correct+" out of "+activeWeek.words.length+" correct. Review the answers in red, then try again!"}
-  </div>`:""}
-  </div>`;
+  return'<div class="test-card">'+
+    '<div class="test-title">Week '+W.week+' Test 📝</div>'+
+    '<div class="test-sub">Tap '+spkSVG(14)+' to hear the sentence and word, then type your answer.</div>'+
+    rows+
+    '<div class="test-actions">'+
+    (!testDone
+      ?'<button class="act pri" onclick="submitTest()">Submit answers ✓</button><button class="act" onclick="playAll()">▶ Play all</button>'
+      :'<button class="act'+(perfect?"":" warn")+'" onclick="retryTest()">'+(perfect?"Try again ↺":"Try test again →")+'</button><button class="act pri" onclick="finishWeek()">See my stars! ⭐</button>'
+    )+
+    '<button class="act" onclick="setMode(\'learn\')" style="margin-left:auto;">← Back to practice</button>'+
+    '</div>'+
+    (testDone?'<div class="fb '+(perfect?"good":"bad")+'" style="margin-top:1rem;">'+(perfect?"⭐ Perfect! You spelled all "+W.words.length+" words correctly!":"You got "+correct+" out of "+W.words.length+" correct. Check the answers shown in red, then try again!")+'</div>':'')+
+    '</div>';
 }
 
-let playAllTimer=null;
-function playAllTest(){
-  speechSynthesis.cancel();
-  if(playAllTimer){clearTimeout(playAllTimer);}
-  let i=0;
-  function playNext(){
-    if(i>=activeWeek.words.length)return;
-    speakTestItem(i);
-    const el=document.getElementById("tinput-"+i);
-    if(el)el.focus();
-    // estimate duration: sentence + word + word + pauses ≈ 5–8s
-    const dur=(activeWeek.words[i].sentence.split(" ").length*350+activeWeek.words[i].word.length*200+2000);
-    playAllTimer=setTimeout(()=>{i++;playNext();},dur);
-  }
-  playNext();
-}
-
-function handleTestInp(idx,val){testAnswers[idx]=val;}
-function handleTestKey(e,idx){
+function handleTestInp(i,v){testAns[i]=v;}
+function handleTestKey(e,i){
   if(e.key==="Enter"){
-    const next=document.getElementById("tinput-"+(idx+1));
-    if(next)next.focus();
-    else submitTest();
+    var nx=document.getElementById("tinput"+(i+1));
+    if(nx)nx.focus();else submitTest();
   }
 }
+function submitTest(){testDone=true;speechSynthesis.cancel();drawMain();}
+function retryTest(){testAns=W.words.map(function(){return"";});testDone=false;drawMain();}
 
-function submitTest(){
-  testSubmitted=true;
+var playTimer=null;
+function playAll(){
   speechSynthesis.cancel();
-  renderMain();
+  if(playTimer)clearTimeout(playTimer);
+  var i=0;
+  function next(){
+    if(i>=W.words.length)return;
+    speakTestQ(i);
+    var nx=document.getElementById("tinput"+i);if(nx)nx.focus();
+    var dur=W.words[i].word.length*300+2000;
+    playTimer=setTimeout(function(){i++;next();},dur);
+  }
+  next();
 }
 
-function retryTest(){
-  testAnswers=activeWeek.words.map(()=>"");
-  testSubmitted=false;
-  renderMain();
-}
-
-/* ── FINISH / SCORE ── */
+// ── FINISH / SCORE ──
 function finishWeek(){
-  const correct=testAnswers.filter((a,i)=>a.trim().toLowerCase()===activeWeek.words[i].word.toLowerCase()).length;
-  const total=activeWeek.words.length;
-  appState.weekScores[activeWeek.week]={stars:correct,total};
+  var correct=testAns.filter(function(a,i){return a.trim().toLowerCase()===W.words[i].word.toLowerCase();}).length;
+  ST.scores[W.week]={stars:correct,total:W.words.length};
   saveState();
-  mode="score";renderMain();
+  mode="score";drawMain();
 }
 
 function scoreHTML(){
-  const sc=appState.weekScores[activeWeek.week];
-  const stars=sc?sc.stars:0;
-  const total=sc?sc.total:activeWeek.words.length;
-  const perfect=stars===total;
-  return`<div class="card sc">
-  <div class="sc-stars pop">${starRow(stars,total)}</div>
-  <div class="sc-num">${stars} / ${total}</div>
-  <h2>${perfect?"Perfect score! Amazing work!":"Keep going — you can get all 10!"}</h2>
-  <p>${perfect?"You got every single word right this week!":"You got "+stars+" out of "+total+" correct. Try the test again to collect all your stars!"}</p>
-  ${perfect?`<div class="choc-box"><div class="choc-icon">🍫</div>You earned your chocolate this week!<br><span style="font-size:13px;font-weight:400;color:#9a7020;">Go claim your reward — you deserve it!</span></div>`:""}
-  <div class="sc-btns">
-    <button class="act${perfect?"":" warn"}" onclick="goToTest()">${perfect?"Do test again ↺":"Try test again →"}</button>
-    <button class="act" onclick="setMode('learn')">Back to practice</button>
-    <button class="act pri" onclick="goHome()">Back to all weeks</button>
-  </div>
-  </div>`;
+  var sc=ST.scores[W.week];
+  var stars=sc?sc.stars:0,total=sc?sc.total:W.words.length;
+  var perfect=stars===total;
+  return'<div class="card sc">'+
+    '<div class="sc-stars pop">'+starRow(stars,total)+'</div>'+
+    '<div class="sc-num">'+stars+' / '+total+'</div>'+
+    '<h2>'+(perfect?"Perfect score! Amazing work!":"Keep going — you can get all 10!")+'</h2>'+
+    '<p>'+(perfect?"You got every single word right this week!":"You got "+stars+" out of "+total+" correct. Try the test again to collect all your stars!")+'</p>'+
+    (perfect?'<div class="choc-box"><div class="choc-icon">🍫</div>You earned your chocolate this week!<br><span style="font-size:13px;font-weight:400;color:#9a7020;">Go claim your reward — you deserve it!</span></div>':'')+
+    '<div class="sc-btns">'+
+    '<button class="act'+(perfect?"":" warn")+'" onclick="setMode(\'test\')">'+(perfect?"Do test again ↺":"Try test again →")+'</button>'+
+    '<button class="act" onclick="setMode(\'learn\')">Back to practice</button>'+
+    '<button class="act pri" onclick="showHome()">Back to all weeks</button>'+
+    '</div></div>';
 }
 
-/* ── ACTIONS ── */
-function setMode(m){speechSynthesis.cancel();mode=m;inp="";fb="";renderMain();}
+// ── ACTIONS ──
+function setMode(m){speechSynthesis.cancel();mode=m;inp="";fb="";drawMain();}
 function handleInp(v){inp=v;}
-function handleKey(e){if(e.key==="Enter")check();}
-function check(){
-  const w=activeWeek.words[cur];
+function handleKey(e){if(e.key==="Enter")chk();}
+function chk(){
+  var w=W.words[cur];
   if(inp.trim().toLowerCase()===w.word.toLowerCase()){
-    fb="good";scores[cur]=true;updateHeaderStars();
-    setTimeout(()=>speak(w.word,0.72),250);
-  }else{fb="bad";tries++;if(scores[cur]===undefined)scores[cur]=false;}
-  renderMain();
+    fb="good";practiceScores[cur]=true;updStars();
+    setTimeout(function(){speak(w.word,0.72);},250);
+  }else{fb="bad";tries++;if(practiceScores[cur]===undefined)practiceScores[cur]=false;}
+  drawMain();
 }
-function retry(){fb="";inp="";renderMain();}
-function next(){cur++;mode="learn";inp="";fb="";tries=0;renderPips();renderMain();}
-function nextWord(){cur++;mode="learn";inp="";fb="";tries=0;renderPips();renderMain();}
-function goBack(){if(cur>0){cur--;mode="learn";inp="";fb="";tries=0;renderPips();renderMain();}}
-function restartWeek(){cur=0;scores=[];mode="learn";inp="";fb="";tries=0;renderSpelling();}
-function goHome(){speechSynthesis.cancel();renderHome();}
+function retry(){fb="";inp="";drawMain();}
+function next(){cur++;mode="learn";inp="";fb="";tries=0;drawPips();drawMain();}
+function nextWord(){cur++;mode="learn";inp="";fb="";tries=0;drawPips();drawMain();}
+function goBack(){if(cur>0){cur--;mode="learn";inp="";fb="";tries=0;drawPips();drawMain();}}
+function showHome_btn(){showHome();}
+
+showHome();
 </script>
 </body>
 </html>
